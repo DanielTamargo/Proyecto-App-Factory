@@ -7,5 +7,6 @@ target 'AppFactory' do
 
   # Pods for AppFactory
   pod 'Alamofire', '~> 5.0.0-rc.3'
+  pod 'RealmSwift'
 
 end
