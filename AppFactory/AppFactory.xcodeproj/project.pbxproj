@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		81668A8123D2388E0096DBAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81668A7F23D2388E0096DBAB /* Main.storyboard */; };
 		81668A8323D238900096DBAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81668A8223D238900096DBAB /* Assets.xcassets */; };
 		81668A8623D238900096DBAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81668A8423D238900096DBAB /* LaunchScreen.storyboard */; };
+		81A55CBB23DA00E300C25568 /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A55CBA23DA00E300C25568 /* MapaViewController.swift */; };
 		DF4D0B3A0BD877CDDBEFA283 /* Pods_AppFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 719CE047415376EA75965545 /* Pods_AppFactory.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		81668A8223D238900096DBAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81668A8523D238900096DBAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81668A8723D238900096DBAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81A55CBA23DA00E300C25568 /* MapaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				81668A7923D2388E0096DBAB /* AppDelegate.swift */,
 				81668A7B23D2388E0096DBAB /* SceneDelegate.swift */,
 				81668A7D23D2388E0096DBAB /* ViewController.swift */,
+				81A55CBA23DA00E300C25568 /* MapaViewController.swift */,
 				81668A7F23D2388E0096DBAB /* Main.storyboard */,
 				81668A8223D238900096DBAB /* Assets.xcassets */,
 				81668A8423D238900096DBAB /* LaunchScreen.storyboard */,
@@ -88,7 +91,6 @@
 				351EB590AE1AB5D391DC53A4 /* Pods-AppFactory.debug.xcconfig */,
 				5D4290D78E620D983474AB01 /* Pods-AppFactory.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -208,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81668A7E23D2388E0096DBAB /* ViewController.swift in Sources */,
+				81A55CBB23DA00E300C25568 /* MapaViewController.swift in Sources */,
 				81668A7A23D2388E0096DBAB /* AppDelegate.swift in Sources */,
 				81668A7C23D2388E0096DBAB /* SceneDelegate.swift in Sources */,
 			);

@@ -2,10 +2,10 @@
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;}
 {\colortbl;\red255\green255\blue255;\red203\green42\blue5;\red201\green199\blue8;\red147\green139\blue5;
 \red79\green17\blue1;\red16\green90\blue124;\red15\green58\blue176;\red38\green255\blue255;\red42\green0\blue56;
-\red46\green0\blue141;\red123\green221\blue55;}
+\red46\green0\blue141;\red123\green221\blue55;\red25\green162\blue221;\red42\green0\blue57;}
 {\*\expandedcolortbl;;\cssrgb\c84173\c24610\c0;\cssrgb\c82582\c80870\c0;\cssrgb\c64268\c60430\c0;
 \cssrgb\c38623\c9859\c0;\cssrgb\c3870\c43073\c55930;\cssrgb\c6525\c31723\c74484;\cssrgb\c8457\c100000\c100000;\cssrgb\c21945\c2614\c28561;
-\cssrgb\c24324\c6455\c62064;\cssrgb\c54133\c87606\c27652;}
+\cssrgb\c24324\c6455\c62064;\cssrgb\c54133\c87606\c27652;\cssrgb\c5821\c69898\c89230;\cssrgb\c22054\c2728\c28672;}
 \paperw11900\paperh16840\margl1440\margr1440\vieww19820\viewh19660\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
@@ -117,6 +117,82 @@ En esta ventana tambi\'e9n habr\'e1 un bot\'f3n para editar uno de los usuarios 
 \
 Documentaci\'f3n y cr\'e9ditos a los autores:\
 - Primer pack flatiron: <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/monkik" title="monkik">monkik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+Apuntes Swift:\
+\
+\'97 Estructuras de datos:\
+\'97 \'97 \'97 Arrays:\
+		\cf12 var algunosNumeros = Array<Int>()\
+		var algunosNumeros = [Int]() //<- sintaxis preferida cuando lo creas vac\'edo\
+\
+		var listaNombres: [String] = [\'93Dani\'94, \'93Elena\'94]\
+		var listaCompraCine = [\'93Chocolate\'94, \'93Palomitas\'94]\
+\
+		algunosNumeros.append(3)\
+		algunosNumeros = [] //<- vaciar el array \
+		listaNombres[0] // <- acceder al primer elemento de la lista\
+		listaNombres[0] = \'93Daniel\'94 //<- sustituimos Dani por Daniel\
+\
+		var cuatroDoubles = Array(repeating: 0.0, count: 4) //<- crea un array tipo Double de 4 posiciones con todos los valores inicializados a 0.0\
+	???	var seisDoubles = Array(repeating: 0.0, count: 2) + cuatroDoubles //<- b\'e1sicamente, los arrays se pueden sumar (incluso usando el +=)\
+\
+		.count // <- tama\'f1o\
+		.isEmpeto // <- comprobar si est\'e1 vac\'edo\
+		.insert(_:at:)\
+		.remove(at:)\
+		.removeLast\
+\
+		Si se declara con let, no se puede variar ni el contenido ni el n\'famero de elementos\
+\
+		Recorrer:\
+		for item in listaNombres \{\
+			print(item)\
+		\}\
+\
+		for (index, value) in listaNombres.enumerated() \{\
+			print(\'93Item \\(index + 1): \\(value)\'94)\
+		\}\
+\cf0 \
+\'97\'97\'97 Conjuntos:\
+\
+\'97\'97\'97 Diccionarios:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
 \
 \
 }
