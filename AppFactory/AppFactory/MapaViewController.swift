@@ -12,31 +12,22 @@ import CoreLocation
 
 class MapaViewController: UIViewController {
 
-    
+    // Variables que vienen de la parte gráfica
     @IBOutlet weak var mapa: MKMapView!
-    
     @IBOutlet weak var selector: UISegmentedControl!
+    
+    
+    // Variables internas
+    var tipoActividad: String = "" //<- caminar/correr/bici , mejor que sea una enumeración
+    var listaCoordenadas = [Double]() //<- guardar las coordenadas con X frecuencia
     
     let servicioLocalizacion = CLLocationManager()
     var regionEnMetros: Double = 400
     
+    // Se ejecuta al cargar la ventana
     override func viewDidLoad() {
         super.viewDidLoad()
         comprobarServicioLocalizacion()
-    }
-    
-    // Configura el servicio de localización
-    func configurarServicioLocalizacion() {
-        servicioLocalizacion.delegate = self
-        servicioLocalizacion.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    
-    // Centra la vista en la localización del usuario
-    func centrarVistaEnLocalizacionUsuario() {
-        if let localizacion = servicioLocalizacion.location?.coordinate {
-            let region = MKCoordinateRegion.init(center: localizacion, latitudinalMeters: regionEnMetros, longitudinalMeters: regionEnMetros)
-            mapa.setRegion(region, animated: true)
-        }
     }
     
     // Comprueba el servicio de localización
@@ -55,6 +46,15 @@ class MapaViewController: UIViewController {
         }
     }
     
+    // Falta un método que ejecute todo en bucle, estaría bien llamar al método desde el switch después de haber comprobado los permisos, o bien si queremos tener en cuenta que puede quitar los permisos en cualquier momento, podemos lanzar el bucle desde la función comprobarServicioLocalizacion y ahí meter el bucle, el bucle se repetirá cada X tiempo, el tiempo (frecuencia de actualización) cambiará dependiendo del tipo de actividad (caminar, correr, bici)
+    // https://www.innofied.com/implement-location-tracking-using-mapkit-in-swift/
+    
+    // Configura el servicio de localización
+    func configurarServicioLocalizacion() {
+        servicioLocalizacion.delegate = self
+        servicioLocalizacion.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
     // Comprueba la autorización del servicio de localización
     func comprobarAutorizacionLocalizacion() {
         switch CLLocationManager.authorizationStatus() {
@@ -64,6 +64,9 @@ class MapaViewController: UIViewController {
             mapa.showsUserLocation = true
             centrarVistaEnLocalizacionUsuario()
             servicioLocalizacion.startUpdatingLocation()
+            mapa.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
+            crearPolyline()
+            
             break
         case .authorizedAlways:
             //Funciona siempre, incluso cuando está en en segundo plano
@@ -96,7 +99,36 @@ class MapaViewController: UIViewController {
         }
     }
     
+    // Centra la vista en la localización del usuario
+    func centrarVistaEnLocalizacionUsuario() {
+        if let localizacion = servicioLocalizacion.location?.coordinate {
+            let region = MKCoordinateRegion.init(center: localizacion, latitudinalMeters: regionEnMetros, longitudinalMeters: regionEnMetros)
+            mapa.setRegion(region, animated: true)
+        }
+    }
     
+    // Crear la Polyline
+    func crearPolyline() {
+        //Aquí tenemos que definir la lista de coordenadas de las localizaciones
+        let latitud = (servicioLocalizacion.location?.coordinate.latitude)!
+        print(latitud)
+        let longitud = (servicioLocalizacion.location?.coordinate.longitude)!
+        print(longitud)
+        
+        let localizaciones = [
+            CLLocationCoordinate2D(latitude: 10.0, longitude: -96.7970),
+            CLLocationCoordinate2D(latitude: 37.7833, longitude: -122.4167),
+            CLLocationCoordinate2D(latitude: 42.2814, longitude: -83.7483),
+            CLLocationCoordinate2D(latitude: 32.7767, longitude: -96.7970)
+        ]
+        
+        //Creamos la Polyline con los puntos que le hemos pasado
+        let unPolyLine = MKPolyline(coordinates: localizaciones, count: localizaciones.count)
+        
+        //Añadimos la Polyline al mapa
+        mapa.addOverlay(unPolyLine)
+        
+    }
     
     @IBAction func cambiarAmplitud(_ sender: Any) {
         //Cambia la amplitud con la que se ve el mapa
@@ -126,6 +158,23 @@ class MapaViewController: UIViewController {
     }
     */
 
+}
+
+extension MapaViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        //Propiedades de la Polyline
+        if (overlay is MKPolyline) {
+            let renderizadoPolyline = MKPolylineRenderer(overlay: overlay)
+            renderizadoPolyline.strokeColor = UIColor.orange.withAlphaComponent(0.8)
+            renderizadoPolyline.lineWidth = 3
+            return renderizadoPolyline
+        }
+        
+        print("Mal")
+        return MKPolylineRenderer()
+    }
+    
 }
 
 extension MapaViewController: CLLocationManagerDelegate {
