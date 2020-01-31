@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		811A3D4A23E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A3D4923E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift */; };
+		811A3D4C23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A3D4B23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift */; };
 		81668A7A23D2388E0096DBAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81668A7923D2388E0096DBAB /* AppDelegate.swift */; };
 		81668A7C23D2388E0096DBAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81668A7B23D2388E0096DBAB /* SceneDelegate.swift */; };
 		81668A7E23D2388E0096DBAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81668A7D23D2388E0096DBAB /* ViewController.swift */; };
@@ -14,6 +16,7 @@
 		81668A8323D238900096DBAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81668A8223D238900096DBAB /* Assets.xcassets */; };
 		81668A8623D238900096DBAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81668A8423D238900096DBAB /* LaunchScreen.storyboard */; };
 		81A55CBB23DA00E300C25568 /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A55CBA23DA00E300C25568 /* MapaViewController.swift */; };
+		81D68F6D23E36095000A4956 /* Clases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D68F6C23E36095000A4956 /* Clases.swift */; };
 		DF4D0B3A0BD877CDDBEFA283 /* Pods_AppFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 719CE047415376EA75965545 /* Pods_AppFactory.framework */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +24,8 @@
 		351EB590AE1AB5D391DC53A4 /* Pods-AppFactory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppFactory.debug.xcconfig"; path = "Target Support Files/Pods-AppFactory/Pods-AppFactory.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4290D78E620D983474AB01 /* Pods-AppFactory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppFactory.release.xcconfig"; path = "Target Support Files/Pods-AppFactory/Pods-AppFactory.release.xcconfig"; sourceTree = "<group>"; };
 		719CE047415376EA75965545 /* Pods_AppFactory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppFactory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		811A3D4923E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablaRegistrosTableViewController.swift; sourceTree = "<group>"; };
+		811A3D4B23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeldaRegistroTableViewCell.swift; sourceTree = "<group>"; };
 		81668A7623D2388E0096DBAB /* AppFactory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppFactory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81668A7923D2388E0096DBAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81668A7B23D2388E0096DBAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +35,7 @@
 		81668A8523D238900096DBAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81668A8723D238900096DBAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81A55CBA23DA00E300C25568 /* MapaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
+		81D68F6C23E36095000A4956 /* Clases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clases.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,16 +71,27 @@
 		81668A7823D2388E0096DBAB /* AppFactory */ = {
 			isa = PBXGroup;
 			children = (
+				81F4E4FA23E4AA9F00504236 /* RutasGPX */,
 				81668A7923D2388E0096DBAB /* AppDelegate.swift */,
 				81668A7B23D2388E0096DBAB /* SceneDelegate.swift */,
+				81668A8423D238900096DBAB /* LaunchScreen.storyboard */,
+				81668A8223D238900096DBAB /* Assets.xcassets */,
+				81668A8723D238900096DBAB /* Info.plist */,
+				81668A7F23D2388E0096DBAB /* Main.storyboard */,
 				81668A7D23D2388E0096DBAB /* ViewController.swift */,
 				81A55CBA23DA00E300C25568 /* MapaViewController.swift */,
-				81668A7F23D2388E0096DBAB /* Main.storyboard */,
-				81668A8223D238900096DBAB /* Assets.xcassets */,
-				81668A8423D238900096DBAB /* LaunchScreen.storyboard */,
-				81668A8723D238900096DBAB /* Info.plist */,
+				81D68F6C23E36095000A4956 /* Clases.swift */,
+				811A3D4923E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift */,
+				811A3D4B23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift */,
 			);
 			path = AppFactory;
+			sourceTree = "<group>";
+		};
+		81F4E4FA23E4AA9F00504236 /* RutasGPX */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RutasGPX;
 			sourceTree = "<group>";
 		};
 		92DDEA7418165EB3BE11AC75 /* Frameworks */ = {
@@ -211,8 +228,11 @@
 			files = (
 				81668A7E23D2388E0096DBAB /* ViewController.swift in Sources */,
 				81A55CBB23DA00E300C25568 /* MapaViewController.swift in Sources */,
+				811A3D4C23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift in Sources */,
+				81D68F6D23E36095000A4956 /* Clases.swift in Sources */,
 				81668A7A23D2388E0096DBAB /* AppDelegate.swift in Sources */,
 				81668A7C23D2388E0096DBAB /* SceneDelegate.swift in Sources */,
+				811A3D4A23E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

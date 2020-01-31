@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:AppFactory/RutasGPX/corriendo-por-vitoria-gasteiz.gpx">
+   </FileRef>
+   <FileRef
       location = "group:AppFactory.xcodeproj">
    </FileRef>
    <FileRef
