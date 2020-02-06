@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TablaRegistrosTableViewController: UITableViewController {
+    
+    let realm = try! Realm()
 
     // Cargar aquí en una lista la lista de registros del usuario loggeado
     

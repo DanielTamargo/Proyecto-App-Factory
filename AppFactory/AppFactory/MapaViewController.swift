@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import RealmSwift
 
 class MapaViewController: UIViewController, MKMapViewDelegate {
 
@@ -20,13 +21,21 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var labelTemporizador: UILabel!
     @IBOutlet weak var iniciar: UIButton!
     @IBOutlet weak var finalizar: UIButton!
+    @IBOutlet weak var distanciaLabel: UILabel!
+    
+    
+    var registro = Registro()
+    var usuario = Usuario()
     
     // Variables que utilizaremos para el temporizador (mostrarlo en labelTemporizador)
     var temporizador = Timer()
     var temporizadorEstaON = false
     var contador = 0.0
 
-    var evitarCoordenadasRepetidas = 0
+    var fecha_inicio: Date?
+    var distancia_total = 0.0
+    
+    //var evitarCoordenadasRepetidas = 0
     
     // Variables internas
     var tipoActividad: String = "" //<- caminar/correr/bici , mejor que sea una enumeración <- pasamos este valor desde fuera
@@ -39,6 +48,9 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     let servicioLocalizacion = CLLocationManager()
     var regionEnMetros: Double = 400
     var distanciaActualizacion: Int = 10
+    
+    // BBDD
+    let realm = try! Realm()
     
     // Selector -> Cambia la amplitud con la que vemos el mapa
     @IBAction func cambiarAmplitud(_ sender: Any) {
@@ -61,11 +73,47 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     
     // Controla la función de finalizar
     @IBAction func finalizar(_ sender: Any) {
-    
-        //borrar luego
-        print("Número de coordenadas guardadas: \(listaCoordenadas.count)")
         
-        // Guardar todos los datos en la BBDD
+        //TODO : IMPORTANTE, como por ahora no elijo usuario, ¡¡¡¡utilizo siempre el mismo usuario de la BBDD!!!! si implemento usuarios, ¡¡¡cambiar esto!!!
+        let realm = try! Realm()
+        usuario = realm.objects(Usuario.self).first!
+        print(usuario.nickname)
+        
+        
+        // Guardar el registro en la BBDD y añadirselo al usuario
+        temporizadorEstaON = false
+        
+        //let registro = Registro()
+        
+        let registros = realm.objects(Registro.self)
+        
+        
+        
+        
+        registro.id = registros.count + 1
+        registro.fecha = fecha_inicio
+        registro.distancia = distancia_total //<- falta calcular distancia entre puntos //es un double
+        registro.actividad = tipoActividad
+        registro.usuario = usuario
+        
+        let t_contadorTiempo = Int(floor(contador))
+        let t_horas = t_contadorTiempo / 3600
+        let t_minutos = (t_contadorTiempo % 3600) / 60
+        let t_segundos = (t_contadorTiempo % 60) % 60
+        
+        registro.tiempo.append(t_horas)
+        registro.tiempo.append(t_minutos)
+        registro.tiempo.append(t_segundos)
+        
+        for lista in listaCoordenadasTotal {
+            for coordenada in lista {
+                registro.listaLatitudes.append(String(coordenada.latitude))
+                registro.listaLongitudes.append(String(coordenada.longitude))
+            }
+            registro.listaLongitudes.append("pausa")
+            registro.listaLatitudes.append("pausa")
+        }
+        
         
     }
     
@@ -74,6 +122,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     @IBAction func iniciarPausarReanudar(_ sender: Any) {
         let textoBotonIniciar = iniciar.titleLabel?.text
 
+        fecha_inicio = Date()
+        
         if textoBotonIniciar == "Iniciar" {
             print("Iniciando recorrido")
             self.mapView.delegate = self
@@ -148,6 +198,18 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             
             // Configuramos el texto del label
             labelTemporizador.text = "\(horasString)\(minutosString):\(segundosString).\(decimasSegundo)"
+            
+            var kilometros = 0
+            kilometros = Int(distancia_total) / 1000
+            let metros = Int(distancia_total) % 1000
+            
+            if kilometros > 0 {
+                distanciaLabel.text = "\(kilometros)km \(metros)m"
+            } else {
+                distanciaLabel.text = "\(metros)m"
+            }
+            
+            //distanciaLabel.text = String(format: "%.0f")
             
         }
     }
@@ -409,6 +471,19 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
         print("Error con la renderización polyline")
         return MKPolylineRenderer()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        if (segue.identifier == "registroTrasRecorrido") {
+            let destino = segue.destination as! RegistroViewController
+            destino.registro = registro
+            destino.usuario = usuario
+        }
+        
+        
+    }
+    
 }
 
 /*
@@ -430,6 +505,11 @@ extension MapaViewController: CLLocationManagerDelegate {
         mapView.setRegion(region, animated: true)
         if temporizadorEstaON {
             listaCoordenadas.append(localizacion.coordinate)
+            if (listaCoordenadas.count > 1) {
+                let loc1 = CLLocation(latitude: listaCoordenadas[listaCoordenadas.count - 2].latitude, longitude: listaCoordenadas[listaCoordenadas.count - 2].longitude)
+                let loc2 = CLLocation(latitude: listaCoordenadas[listaCoordenadas.count - 1].latitude, longitude: listaCoordenadas[listaCoordenadas.count - 1].longitude)
+                distancia_total += loc1.distance(from: loc2)
+            }
             crearPolyline()
         }
     }

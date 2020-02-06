@@ -16,6 +16,10 @@
 		81668A8323D238900096DBAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81668A8223D238900096DBAB /* Assets.xcassets */; };
 		81668A8623D238900096DBAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81668A8423D238900096DBAB /* LaunchScreen.storyboard */; };
 		81A55CBB23DA00E300C25568 /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A55CBA23DA00E300C25568 /* MapaViewController.swift */; };
+		81C55E8123ECA70B00936E51 /* RegistroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C55E8023ECA70B00936E51 /* RegistroViewController.swift */; };
+		81C55E8323ECA97500936E51 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C55E8223ECA97500936E51 /* TestViewController.swift */; };
+		81D0426523E9C8D5006339B4 /* BBDDTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D0426423E9C8D5006339B4 /* BBDDTestingViewController.swift */; };
+		81D0426723E9D3B5006339B4 /* NuevoUsuarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D0426623E9D3B5006339B4 /* NuevoUsuarioViewController.swift */; };
 		81D68F6D23E36095000A4956 /* Clases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D68F6C23E36095000A4956 /* Clases.swift */; };
 		DF4D0B3A0BD877CDDBEFA283 /* Pods_AppFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 719CE047415376EA75965545 /* Pods_AppFactory.framework */; };
 /* End PBXBuildFile section */
@@ -35,6 +39,10 @@
 		81668A8523D238900096DBAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81668A8723D238900096DBAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81A55CBA23DA00E300C25568 /* MapaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
+		81C55E8023ECA70B00936E51 /* RegistroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroViewController.swift; sourceTree = "<group>"; };
+		81C55E8223ECA97500936E51 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		81D0426423E9C8D5006339B4 /* BBDDTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBDDTestingViewController.swift; sourceTree = "<group>"; };
+		81D0426623E9D3B5006339B4 /* NuevoUsuarioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuevoUsuarioViewController.swift; sourceTree = "<group>"; };
 		81D68F6C23E36095000A4956 /* Clases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clases.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,10 +87,14 @@
 				81668A8723D238900096DBAB /* Info.plist */,
 				81668A7F23D2388E0096DBAB /* Main.storyboard */,
 				81668A7D23D2388E0096DBAB /* ViewController.swift */,
-				81A55CBA23DA00E300C25568 /* MapaViewController.swift */,
 				81D68F6C23E36095000A4956 /* Clases.swift */,
 				811A3D4923E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift */,
+				81A55CBA23DA00E300C25568 /* MapaViewController.swift */,
 				811A3D4B23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift */,
+				81D0426423E9C8D5006339B4 /* BBDDTestingViewController.swift */,
+				81D0426623E9D3B5006339B4 /* NuevoUsuarioViewController.swift */,
+				81C55E8023ECA70B00936E51 /* RegistroViewController.swift */,
+				81C55E8223ECA97500936E51 /* TestViewController.swift */,
 			);
 			path = AppFactory;
 			sourceTree = "<group>";
@@ -228,8 +240,12 @@
 			files = (
 				81668A7E23D2388E0096DBAB /* ViewController.swift in Sources */,
 				81A55CBB23DA00E300C25568 /* MapaViewController.swift in Sources */,
+				81C55E8323ECA97500936E51 /* TestViewController.swift in Sources */,
 				811A3D4C23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift in Sources */,
+				81C55E8123ECA70B00936E51 /* RegistroViewController.swift in Sources */,
+				81D0426523E9C8D5006339B4 /* BBDDTestingViewController.swift in Sources */,
 				81D68F6D23E36095000A4956 /* Clases.swift in Sources */,
+				81D0426723E9D3B5006339B4 /* NuevoUsuarioViewController.swift in Sources */,
 				81668A7A23D2388E0096DBAB /* AppDelegate.swift in Sources */,
 				81668A7C23D2388E0096DBAB /* SceneDelegate.swift in Sources */,
 				811A3D4A23E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift in Sources */,
