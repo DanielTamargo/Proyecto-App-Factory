@@ -12,7 +12,7 @@ import RealmSwift
 class TablaRegistrosTableViewController: UITableViewController {
     
     let realm = try! Realm()
-
+    
     // Cargar aquí en una lista la lista de registros del usuario loggeado
     
     override func viewDidLoad() {
@@ -34,7 +34,8 @@ class TablaRegistrosTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5 //listaRegistros.count
+        let registros = realm.objects(Registro.self)
+        return registros.count
     }
 
     

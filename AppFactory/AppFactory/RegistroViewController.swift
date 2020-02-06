@@ -16,6 +16,7 @@ class RegistroViewController: UIViewController {
     var registro: Registro?
     
     @IBOutlet weak var nickname: UILabel!
+    @IBOutlet weak var actividad: UILabel!
     @IBOutlet weak var distancia: UILabel!
     @IBOutlet weak var tiempo: UILabel!
     @IBOutlet weak var calorias: UILabel!
@@ -48,6 +49,12 @@ class RegistroViewController: UIViewController {
 
         nickname.text = usuario?.nickname
         nickname.textColor = UIColor.purple.withAlphaComponent(1)
+        
+        //Sombras de la imagen https://fluffy.es/rounded-corner-shadow/
+        imagen_rating.layer.shadowColor = UIColor.darkGray.cgColor
+        imagen_rating.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
+        imagen_rating.layer.shadowRadius = 5.0
+        imagen_rating.layer.shadowOpacity = 0.9
         
         //Faltan
         //- Fórmula para calcular las calorías

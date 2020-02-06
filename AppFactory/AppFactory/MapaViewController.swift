@@ -87,9 +87,6 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
         
         let registros = realm.objects(Registro.self)
         
-        
-        
-        
         registro.id = registros.count + 1
         registro.fecha = fecha_inicio
         registro.distancia = distancia_total //<- falta calcular distancia entre puntos //es un double
@@ -114,6 +111,11 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             registro.listaLatitudes.append("pausa")
         }
         
+        try! realm.write {
+            realm.add(registro)
+            print("Registro añadido")
+            performSegue(withIdentifier: "registroTrasRecorrido", sender: self)
+        }
         
     }
     
@@ -434,20 +436,31 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
         } else {
             print("No hay suficientes coordenadas para empezar la polyline")
         }
-        
+    }
+    
+    func volverANuevoRecorrido() {
+        super.navigationController?.popViewController(animated: true)
     }
 
     func alertaAutorizacionDenegada() {
         
         let alertController = UIAlertController(title: "Aplicación sin permisos", message: "Los permisos de ubicación para esta aplicación están denegados. Debes otorgar permisos de ubicación a la aplicación. Puedes cambiar esta configuración desde las opciones de tu teléfono.", preferredStyle: .alert)
-        
+        let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
+            //let firstTextField = alertController.textFields![0] as UITextField
+            self.volverANuevoRecorrido()
+        }
+        alertController.addAction(actionGuardar)
         present(alertController, animated: true, completion: nil)
     }
     
     func alertaAutorizacionRestringida() {
         
         let alertController = UIAlertController(title: "Aplicación sin permisos", message: "Los permisos de ubicación para esta aplicación están restringidos y esto impide un correcto funcionamiento. Debes otorgar permisos de ubicación a la aplicación. Puedes cambiar esta configuración desde las opciones de tu teléfono.", preferredStyle: .alert)
-        
+        let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
+            //let firstTextField = alertController.textFields![0] as UITextField
+            self.volverANuevoRecorrido()
+        }
+        alertController.addAction(actionGuardar)
         present(alertController, animated: true, completion: nil)
     }
     
@@ -462,7 +475,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             let renderizadoPolyline = MKPolylineRenderer(overlay: overlay)
             renderizadoPolyline.fillColor = UIColor.orange.withAlphaComponent(0.8)
             renderizadoPolyline.strokeColor = UIColor.orange.withAlphaComponent(0.8)
-            renderizadoPolyline.lineWidth = 3
+            renderizadoPolyline.lineWidth = 5
             
             print("Renderización exitosa")
             return renderizadoPolyline
