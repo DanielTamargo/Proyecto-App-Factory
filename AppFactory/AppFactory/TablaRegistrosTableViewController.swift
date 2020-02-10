@@ -12,12 +12,22 @@ import RealmSwift
 class TablaRegistrosTableViewController: UITableViewController {
     
     let realm = try! Realm()
+    var registros : Results<Registro>?
+    
+    //Cargamos todos los registros. La idea es que es una app para uso personal/familiar, así que se visualizarán todos los registros (mostraremos la imagen de cada usuario)
+    //En próximos avances intentaré implementar una forma de filtrar
+    //"Solo mis registros / Todos los registros" " <5km / >5km"
+    func cargarRegistros() {
+        //registros = realm.objects(Registro.self).filter(byKeyPath:descending:)
+        registros = realm.objects(Registro.self).sorted(byKeyPath: "id", ascending: false)
+        
+    }
     
     // Cargar aquí en una lista la lista de registros del usuario loggeado
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        cargarRegistros()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -40,7 +50,7 @@ class TablaRegistrosTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaRegistro", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaRegistro", for: indexPath) as! CeldaRegistroTableViewCell
         
         // Configuramos cada celda
         cell.layer.borderWidth = 1.2
@@ -53,9 +63,57 @@ class TablaRegistrosTableViewController: UITableViewController {
             cell.layer.borderColor = UIColor.orange.cgColor
         }
         
+        guard let registro = registros?[indexPath.row] else {
+            return cell
+        }
+        
+        //Titulo
+        cell.titulo.text = "Registro nº\(registro.id)"
+        
+        //Distancia
+        let distancia_total = registro.distancia
+        var kilometros = 0
+        kilometros = Int(distancia_total) / 1000
+        let metros = Int(distancia_total) % 1000
+        if kilometros > 0 {
+            cell.distancia.text = "Distancia: \(kilometros)km \(metros)m"
+        } else {
+            cell.distancia.text = "Distancia: \(metros)m"
+        }
+        
+        //Tiempo
+         if registro.tiempo.count > 2 {
+             cell.tiempo.text = "Tiempo: \(registro.tiempo[0])h \(registro.tiempo[1])m \(registro.tiempo[2])s"
+         } else {
+             cell.tiempo.text = "Tiempo: error"
+         }
+        
+        
+        //Fecha
+        let df = DateFormatter()
+        //df.dateStyle = .full
+        //df.timeStyle = .full
+        df.dateFormat = "dd MMM yyyy"
+        let fecha = df.string(from: registro.fecha!)
+        cell.fecha.text = fecha
+        
+        //Imagen usuario
+        if (registro.usuario!.num_icono > 0 && registro.usuario!.num_icono < 16) {
+            let imagenUsu = UIImage(named: "avatar-\(registro.usuario!.num_icono)")
+            cell.imagen_usuario.image = imagenUsu
+        }
+        
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let registro = registros?[indexPath.row] else { return }
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let pantallaRegistro = storyBoard.instantiateViewController(withIdentifier: "VistaRegistro") as! RegistroViewController
+        pantallaRegistro.registro = registro
+        navigationController?.pushViewController(pantallaRegistro, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.

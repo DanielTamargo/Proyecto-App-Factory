@@ -14,6 +14,8 @@ class CeldaRegistroTableViewCell: UITableViewCell {
     @IBOutlet weak var fecha: UILabel!
     @IBOutlet weak var distancia: UILabel!
     @IBOutlet weak var tiempo: UILabel!
+    @IBOutlet weak var imagen_usuario: UIImageView!
+    
     
     
     override func awakeFromNib() {

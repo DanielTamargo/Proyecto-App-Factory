@@ -66,6 +66,13 @@ class NuevoUsuarioViewController: UIViewController {
         avatar.image = imagen
     }
     
+    @IBAction func nicknameChanged(_ sender: Any) {
+        if nickname.text!.count > 3 {
+            nickname.deleteBackward()
+        }
+    }
+    
+    
     @IBAction func guardar(_ sender: Any) {
         print("Nickname: \(nickname.text ?? "")")
         print("Sexo: \(sexo.selectedSegmentIndex)")
@@ -171,10 +178,19 @@ extension NuevoUsuarioViewController: UITextFieldDelegate {
         if (textField == self.nickname) {
             caraceteres_permitidos = CharacterSet.alphanumerics
             coleccion_caracteres = CharacterSet(charactersIn: string)
+            
+            checkMaxLength(textField: textField, maxLength: 16)
             print("nickname")
         } else {
+            checkMaxLength(textField: textField, maxLength: 3)
             print("peso o altura")
         }
         return caraceteres_permitidos.isSuperset(of: coleccion_caracteres)
+    }
+    func checkMaxLength(textField: UITextField!, maxLength: Int) {
+        guard let text = textField.text else { return }
+        if (text.count > maxLength) {
+            textField.deleteBackward()
+        }
     }
 }

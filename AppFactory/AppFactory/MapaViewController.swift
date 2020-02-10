@@ -22,6 +22,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var iniciar: UIButton!
     @IBOutlet weak var finalizar: UIButton!
     @IBOutlet weak var distanciaLabel: UILabel!
+    @IBOutlet weak var caloriasLabel: UILabel!
     
     
     var registro = Registro()
@@ -34,6 +35,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
 
     var fecha_inicio: Date?
     var distancia_total = 0.0
+    
+    var calorias_gastadas = 0.0
     
     //var evitarCoordenadasRepetidas = 0
     
@@ -63,7 +66,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             regionEnMetros = 1000
             comprobarAutorizacionLocalizacion()
         case 2:
-            regionEnMetros = 2000
+            regionEnMetros = 5000
             comprobarAutorizacionLocalizacion()
         default:
             //Nada
@@ -74,47 +77,59 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     // Controla la función de finalizar
     @IBAction func finalizar(_ sender: Any) {
         
-        //TODO : IMPORTANTE, como por ahora no elijo usuario, ¡¡¡¡utilizo siempre el mismo usuario de la BBDD!!!! si implemento usuarios, ¡¡¡cambiar esto!!!
-        let realm = try! Realm()
-        usuario = realm.objects(Usuario.self).first!
-        print(usuario.nickname)
-        
-        
-        // Guardar el registro en la BBDD y añadirselo al usuario
-        temporizadorEstaON = false
-        
-        //let registro = Registro()
-        
-        let registros = realm.objects(Registro.self)
-        
-        registro.id = registros.count + 1
-        registro.fecha = fecha_inicio
-        registro.distancia = distancia_total //<- falta calcular distancia entre puntos //es un double
-        registro.actividad = tipoActividad
-        registro.usuario = usuario
-        
-        let t_contadorTiempo = Int(floor(contador))
-        let t_horas = t_contadorTiempo / 3600
-        let t_minutos = (t_contadorTiempo % 3600) / 60
-        let t_segundos = (t_contadorTiempo % 60) % 60
-        
-        registro.tiempo.append(t_horas)
-        registro.tiempo.append(t_minutos)
-        registro.tiempo.append(t_segundos)
-        
-        for lista in listaCoordenadasTotal {
-            for coordenada in lista {
-                registro.listaLatitudes.append(String(coordenada.latitude))
-                registro.listaLongitudes.append(String(coordenada.longitude))
+        if (listaCoordenadas.count > 5) {
+            
+            listaCoordenadasTotal.append(listaCoordenadas)
+            // Guardar el registro en la BBDD y añadirselo al usuario
+            temporizadorEstaON = false
+            
+            //let registro = Registro()
+            
+            let registros = realm.objects(Registro.self)
+            
+            registro.id = registros.count + 1
+            
+            fecha_inicio = Date()
+            registro.fecha = fecha_inicio
+            
+            registro.distancia = distancia_total
+            registro.actividad = tipoActividad
+            registro.usuario = usuario
+            registro.pausas = listaCoordenadasTotal.count - 1
+            
+            let t_contadorTiempo = Int(floor(contador))
+            let t_horas = t_contadorTiempo / 3600
+            let t_minutos = (t_contadorTiempo % 3600) / 60
+            let t_segundos = (t_contadorTiempo % 60) % 60
+            
+            registro.tiempo.append(t_horas)
+            registro.tiempo.append(t_minutos)
+            registro.tiempo.append(t_segundos)
+            
+            for lista in listaCoordenadasTotal {
+                for coordenada in lista {
+                    let lat: String = String(Double(coordenada.latitude))
+                    let long: String = String(Double(coordenada.longitude))
+                    print(lat)
+                    print(long)
+                    registro.listaLatitudes.append(lat)
+                    registro.listaLongitudes.append(long)
+                }
+                
+                registro.listaLongitudes.append("pausa")
+                registro.listaLatitudes.append("pausa")
+                
             }
-            registro.listaLongitudes.append("pausa")
-            registro.listaLatitudes.append("pausa")
-        }
-        
-        try! realm.write {
-            realm.add(registro)
-            print("Registro añadido")
-            performSegue(withIdentifier: "registroTrasRecorrido", sender: self)
+            
+            try! realm.write {
+                realm.add(registro)
+                print("Registro añadido")
+                //performSegue(withIdentifier: "registroTrasRecorrido", sender: self)
+            }
+        } else {
+            //Mostrar Alerta
+            print("Recorrido demasiado corto")
+            
         }
         
     }
@@ -124,8 +139,6 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     @IBAction func iniciarPausarReanudar(_ sender: Any) {
         let textoBotonIniciar = iniciar.titleLabel?.text
 
-        fecha_inicio = Date()
-        
         if textoBotonIniciar == "Iniciar" {
             print("Iniciando recorrido")
             self.mapView.delegate = self
@@ -145,8 +158,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             } else {
                 print("Reanudando recorrido")
                 
-                listaCoordenadas = [CLLocationCoordinate2D]()
                 listaCoordenadasTotal.append(listaCoordenadas)
+                listaCoordenadas = [CLLocationCoordinate2D]()
                 
                 temporizadorEstaON = true
                 
@@ -211,14 +224,45 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
                 distanciaLabel.text = "\(metros)m"
             }
             
+            caloriasQuemadas()
             //distanciaLabel.text = String(format: "%.0f")
-            
         }
     }
+    
+    func caloriasQuemadas() {
+        //fórmula: https://www.vitonica.com/carrera/cuantas-calorias-quemo-corriendo-dos-formulas-para-calcularlas
+        //en base a la velocidad y peso quemará una cantidad de calorías por minuto
+    
+        let peso = usuario.peso
+        let contadorTiempo = Int(floor(contador))
+        let horas = Double(contadorTiempo / 3600)
+        //let minutos = (contadorTiempo % 3600) / 60
+        //let segundos = (contadorTiempo % 60) % 60
+        let velocidad = (distancia_total / 1000) / horas
+        var esfuerzo = 0.0175 //corriendo (caminando = 0.0600. bici = 0.0400)
+        if (tipoActividad == "Correr") {
+            esfuerzo = 0.0600
+        } else if (tipoActividad == "Bici") {
+            esfuerzo = 0.0400
+        }
+        
+        var kCalorias_minuto: Double = 7.1
+        
+        kCalorias_minuto =  velocidad * esfuerzo * Double(peso)
+        
+        if (kCalorias_minuto < 1) {
+            caloriasLabel.text = "\(kCalorias_minuto * 1000)cal/min"
+        } else {
+            caloriasLabel.text = "\(kCalorias_minuto)Kcal/min"
+        }
+        
+    }
+    
     
     // Se ejecuta al cargar la ventana
     override func viewDidLoad() {
         super.viewDidLoad()
+        //cargarUsuario()
         comprobarServicioLocalizacion()
     }
     
@@ -322,121 +366,9 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             print("No hay suficientes coordenadas para empezar la polyline")
         }
         
-        
-        /*
-        print("Empezando a crear Polyline")
-        //Aquí tenemos que definir la lista de coordenadas de las localizaciones
-        let latitud = (servicioLocalizacion.location?.coordinate.latitude)!
-        print(latitud)
-        let longitud = (servicioLocalizacion.location?.coordinate.longitude)!
-        print(longitud)
-        let localizaciones = [
-            CLLocationCoordinate2D(latitude: 10.0, longitude: -96.7970),
-            CLLocationCoordinate2D(latitude: 37.7833, longitude: -122.4167),
-            CLLocationCoordinate2D(latitude: 42.2814, longitude: -83.7483),
-            CLLocationCoordinate2D(latitude: 32.7767, longitude: -96.7970)
-        ]
-        
-        //Creamos la Polyline con los puntos que le hemos pasado
-        let unPolyLine = MKPolyline(coordinates: localizaciones, count: localizaciones.count)
-        
-        //Añadimos la Polyline al mapa
-        mapa.addOverlay(unPolyLine)
-        */
-    }
-    
-    // Otro intento de Polyline, que sigue sin funcionar // Corrijo, soy imbécil, sí que funcionaban todos pero me faltaba mapView.delegate = self :)
-    func otroIntentoDePolyline() {
-        
-        print("Empezando a crear Polyline (fórmula 2)")
-        
-        let latitud = (servicioLocalizacion.location?.coordinate.latitude)!
-        let longitud = (servicioLocalizacion.location?.coordinate.longitude)!
-        print(latitud)
-        print(longitud)
-        
-        let localizacionInicial = CLLocation(latitude: latitud, longitude: longitud)
-        let localizacionFinal = CLLocation(latitude: (latitud - 10), longitude: (longitud - 10))
-        print(localizacionInicial)
-        print(localizacionFinal)
-        
-        let localizaciones = [localizacionInicial, localizacionFinal]
-        print(localizaciones)
-        
-        var coordenadas = localizaciones.map({(localizacion: CLLocation!) -> CLLocationCoordinate2D in return localizacion.coordinate})
-        print(coordenadas)
-        
-        let polylinea = MKPolyline(coordinates: &coordenadas, count: localizaciones.count)
-        print(polylinea)
-        mapView.addOverlay(polylinea, level: .aboveRoads)
     }
     
     
-    // Otro más, peor resultado, destroza el mapa
-    func otroIntentoMasDePolyline() { //<- este intento me toca algo del mapa
-    
-        print("Empezando a crear Polyline (fórmula 3)")
-        
-        /*
-        let point1 = CLLocationCoordinate2DMake(-73.761105, 41.017791);
-        let point2 = CLLocationCoordinate2DMake(-73.760701, 41.019348);
-        let point3 = CLLocationCoordinate2DMake(-73.757201, 41.019267);
-        let point4 = CLLocationCoordinate2DMake(-73.757482, 41.016375);
-        let point5 = CLLocationCoordinate2DMake(-73.761105, 41.017791);
-        */
-        
-        let points: [CLLocationCoordinate2D]
-        points = listaCoordenadas
-
-        let geodesic = MKGeodesicPolyline(coordinates: points, count: 5)
-        mapView.addOverlay(geodesic)
-
-        UIView.animate(withDuration: 1.5, animations: { () -> Void in
-            //let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            if let localizacion = self.servicioLocalizacion.location?.coordinate {
-                let region = MKCoordinateRegion.init(center: localizacion, latitudinalMeters: self.regionEnMetros, longitudinalMeters: self.regionEnMetros)
-                self.mapView.setRegion(region, animated: true)
-            }
-        })
-    }
-    
-    func polylineSalYaPorfavor() { // Corrijo, soy imbécil, sí que funcionaban todos pero me faltaba mapView.delegate = self :)
-        
-        print("Empezando a crear Polyline (fórmula 4)")
-
-        if listaCoordenadas.count > 1 {
-            
-            let sourceLocation: CLLocationCoordinate2D = listaCoordenadas[listaCoordenadas.count - 2]
-            let destinationLocation: CLLocationCoordinate2D = listaCoordenadas[listaCoordenadas.count - 1]
-            
-            let sourcePlacemark = MKPlacemark(coordinate: sourceLocation)
-            let destinationPlacemark = MKPlacemark(coordinate: destinationLocation)
-            
-            let directionRequest = MKDirections.Request()
-            directionRequest.source = MKMapItem(placemark: sourcePlacemark)
-            directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
-            directionRequest.transportType = .walking
-
-            let directions = MKDirections(request: directionRequest)
-            directions.calculate {
-                (response, error) in guard let directionResonse = response else {
-                    if let error = error {
-                        print("Error obteniendo las direcciones: \(error)")
-                    }
-                    return
-                }
-                let route = directionResonse.routes[0]
-                self.mapView.addOverlay(route.polyline, level: .aboveRoads)
-                
-                //let rect = route.polyline.boundingMapRect
-                //self.mapView.setRegion(MKCoordinateRegion, animated: true)
-            }
-            self.mapView.delegate = self
-            
-        } else {
-            print("No hay suficientes coordenadas para empezar la polyline")
-        }
-    }
     
     func volverANuevoRecorrido() {
         super.navigationController?.popViewController(animated: true)
@@ -475,7 +407,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             let renderizadoPolyline = MKPolylineRenderer(overlay: overlay)
             renderizadoPolyline.fillColor = UIColor.orange.withAlphaComponent(0.8)
             renderizadoPolyline.strokeColor = UIColor.orange.withAlphaComponent(0.8)
-            renderizadoPolyline.lineWidth = 5
+            renderizadoPolyline.lineWidth = 6
             
             print("Renderización exitosa")
             return renderizadoPolyline
@@ -499,17 +431,6 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     
 }
 
-/*
-extension MKPolyline { //<- quiere tratar un posible error con las coordenadas al leerlas cuando las pasas al polyline, pero no surte efecto
-    convenience init(coordinates coords: Array<CLLocationCoordinate2D>) {
-        let unsafeCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: coords.count)
-        unsafeCoordinates.initialize(from: coords, count: coords.count)
-        self.init(coordinates: unsafeCoordinates, count: coords.count)
-        unsafeCoordinates.deallocate()
-    }
-}
- */
-
 extension MapaViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations localizaciones: [CLLocation]) {
         guard let localizacion = localizaciones.last else { return }
@@ -532,3 +453,114 @@ extension MapaViewController: CLLocationManagerDelegate {
     }
     
 }
+
+
+
+
+
+/*
+// Otro intento de Polyline, que sigue sin funcionar // Corrijo, soy imbécil, sí que funcionaban todos pero me faltaba mapView.delegate = self :)
+func otroIntentoDePolyline() {
+    
+    print("Empezando a crear Polyline (fórmula 2)")
+    
+    let latitud = (servicioLocalizacion.location?.coordinate.latitude)!
+    let longitud = (servicioLocalizacion.location?.coordinate.longitude)!
+    print(latitud)
+    print(longitud)
+    
+    let localizacionInicial = CLLocation(latitude: latitud, longitude: longitud)
+    let localizacionFinal = CLLocation(latitude: (latitud - 10), longitude: (longitud - 10))
+    print(localizacionInicial)
+    print(localizacionFinal)
+    
+    let localizaciones = [localizacionInicial, localizacionFinal]
+    print(localizaciones)
+    
+    var coordenadas = localizaciones.map({(localizacion: CLLocation!) -> CLLocationCoordinate2D in return localizacion.coordinate})
+    print(coordenadas)
+    
+    let polylinea = MKPolyline(coordinates: &coordenadas, count: localizaciones.count)
+    print(polylinea)
+    mapView.addOverlay(polylinea, level: .aboveRoads)
+}
+
+
+// Otro más, peor resultado, destroza el mapa
+func otroIntentoMasDePolyline() { //<- este intento me toca algo del mapa
+
+    print("Empezando a crear Polyline (fórmula 3)")
+    
+    /*
+    let point1 = CLLocationCoordinate2DMake(-73.761105, 41.017791);
+    let point2 = CLLocationCoordinate2DMake(-73.760701, 41.019348);
+    let point3 = CLLocationCoordinate2DMake(-73.757201, 41.019267);
+    let point4 = CLLocationCoordinate2DMake(-73.757482, 41.016375);
+    let point5 = CLLocationCoordinate2DMake(-73.761105, 41.017791);
+    */
+    
+    let points: [CLLocationCoordinate2D]
+    points = listaCoordenadas
+
+    let geodesic = MKGeodesicPolyline(coordinates: points, count: 5)
+    mapView.addOverlay(geodesic)
+
+    UIView.animate(withDuration: 1.5, animations: { () -> Void in
+        //let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        if let localizacion = self.servicioLocalizacion.location?.coordinate {
+            let region = MKCoordinateRegion.init(center: localizacion, latitudinalMeters: self.regionEnMetros, longitudinalMeters: self.regionEnMetros)
+            self.mapView.setRegion(region, animated: true)
+        }
+    })
+}
+
+func polylineSalYaPorfavor() { // Corrijo, soy imbécil, sí que funcionaban todos pero me faltaba mapView.delegate = self :)
+    
+    print("Empezando a crear Polyline (fórmula 4)")
+
+    if listaCoordenadas.count > 1 {
+        
+        let sourceLocation: CLLocationCoordinate2D = listaCoordenadas[listaCoordenadas.count - 2]
+        let destinationLocation: CLLocationCoordinate2D = listaCoordenadas[listaCoordenadas.count - 1]
+        
+        let sourcePlacemark = MKPlacemark(coordinate: sourceLocation)
+        let destinationPlacemark = MKPlacemark(coordinate: destinationLocation)
+        
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = MKMapItem(placemark: sourcePlacemark)
+        directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
+        directionRequest.transportType = .walking
+
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate {
+            (response, error) in guard let directionResonse = response else {
+                if let error = error {
+                    print("Error obteniendo las direcciones: \(error)")
+                }
+                return
+            }
+            let route = directionResonse.routes[0]
+            self.mapView.addOverlay(route.polyline, level: .aboveRoads)
+            
+            //let rect = route.polyline.boundingMapRect
+            //self.mapView.setRegion(MKCoordinateRegion, animated: true)
+        }
+        self.mapView.delegate = self
+        
+    } else {
+        print("No hay suficientes coordenadas para empezar la polyline")
+    }
+}
+*/
+
+
+/*
+extension MKPolyline { //<- quiere tratar un posible error con las coordenadas al leerlas cuando las pasas al polyline, pero no surte efecto
+    convenience init(coordinates coords: Array<CLLocationCoordinate2D>) {
+        let unsafeCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: coords.count)
+        unsafeCoordinates.initialize(from: coords, count: coords.count)
+        self.init(coordinates: unsafeCoordinates, count: coords.count)
+        unsafeCoordinates.deallocate()
+    }
+}
+ */

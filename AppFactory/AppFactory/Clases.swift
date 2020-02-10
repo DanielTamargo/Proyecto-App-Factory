@@ -54,7 +54,6 @@ class Registro: Object {
     //let listaPausasLongitudes = List<String>() //<- se podría usar para separar los recorridos por las pausas
     //otra opción sería guardar la cadena "pausa" dentro de listaLatitudes y listaLongitudes, y al leerlas, si sale pausa, separarlo en listas
     
-    
     //extras
     @objc dynamic var pausas: Int = 0
     
