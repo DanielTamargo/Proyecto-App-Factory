@@ -24,14 +24,18 @@ class NuevoRecorridoViewController: UIViewController {
         let usuario = realm.objects(Usuario.self).first!
         print(usuario.nickname)
         
-        let destino = segue.destination as! MapaViewController
-        destino.usuario = usuario
         
         if (segue.identifier == "nuevoRecorridoCaminar") {
+            let destino = segue.destination as! MapaViewController
+            destino.usuario = usuario
             destino.tipoActividad = "Caminar"
         } else if (segue.identifier == "nuevoRecorridoCorrer") {
+            let destino = segue.destination as! MapaViewController
+            destino.usuario = usuario
             destino.tipoActividad = "Correr"
         } else if (segue.identifier == "nuevoRecorridoBici") {
+            let destino = segue.destination as! MapaViewController
+            destino.usuario = usuario
             destino.tipoActividad = "Bici"
         }
     }

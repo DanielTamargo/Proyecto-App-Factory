@@ -67,11 +67,22 @@ class NuevoUsuarioViewController: UIViewController {
     }
     
     @IBAction func nicknameChanged(_ sender: Any) {
-        if nickname.text!.count > 3 {
+        if nickname.text!.count > 16 {
             nickname.deleteBackward()
         }
     }
     
+    @IBAction func alturaChanged(_ sender: Any) {
+        if altura.text!.count > 3 {
+            altura.deleteBackward()
+        }
+    }
+    
+    @IBAction func pesoChanged(_ sender: Any) {
+        if peso.text!.count > 3 {
+            peso.deleteBackward()
+        }
+    }
     
     @IBAction func guardar(_ sender: Any) {
         print("Nickname: \(nickname.text ?? "")")
@@ -179,10 +190,10 @@ extension NuevoUsuarioViewController: UITextFieldDelegate {
             caraceteres_permitidos = CharacterSet.alphanumerics
             coleccion_caracteres = CharacterSet(charactersIn: string)
             
-            checkMaxLength(textField: textField, maxLength: 16)
+            //checkMaxLength(textField: textField, maxLength: 16)
             print("nickname")
         } else {
-            checkMaxLength(textField: textField, maxLength: 3)
+            //checkMaxLength(textField: textField, maxLength: 3)
             print("peso o altura")
         }
         return caraceteres_permitidos.isSuperset(of: coleccion_caracteres)

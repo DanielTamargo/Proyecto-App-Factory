@@ -258,7 +258,6 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    
     // Se ejecuta al cargar la ventana
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -358,17 +357,37 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             print()
             
             let polyline = MKPolyline(coordinates: listaCoordenadas, count: listaCoordenadas.count)
+            polyline.title = "main"
             
             mapView.addOverlay(polyline)
-            
             
         } else {
             print("No hay suficientes coordenadas para empezar la polyline")
         }
-        
     }
     
-    
+    func crearBordePolyline() {
+        print("Empezando a crear Polyline")
+        
+        if listaCoordenadas.count >= 2 {
+            let puntoA = listaCoordenadas[listaCoordenadas.count - 2]
+            let puntoB = listaCoordenadas[listaCoordenadas.count - 1]
+            
+            print()
+            print("Últimas dos coordenadas para la polyline")
+            print("\(puntoA.latitude), \(puntoA.longitude)")
+            print("\(puntoB.latitude), \(puntoB.longitude)")
+            print()
+            
+            let polyline = MKPolyline(coordinates: listaCoordenadas, count: listaCoordenadas.count)
+            //polyline.title = "main" //<- más gorda y negra, hará de borde estando detrás de la polyline principal
+            
+            mapView.addOverlay(polyline)
+            
+        } else {
+            print("No hay suficientes coordenadas para empezar la polyline")
+        }
+    }
     
     func volverANuevoRecorrido() {
         super.navigationController?.popViewController(animated: true)
@@ -406,8 +425,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             
             let renderizadoPolyline = MKPolylineRenderer(overlay: overlay)
             renderizadoPolyline.fillColor = UIColor.orange.withAlphaComponent(0.8)
-            renderizadoPolyline.strokeColor = UIColor.orange.withAlphaComponent(0.8)
-            renderizadoPolyline.lineWidth = 6
+            renderizadoPolyline.strokeColor = overlay.title == "main" ? UIColor.orange.withAlphaComponent(1) : .black
+            renderizadoPolyline.lineWidth = overlay.title == "main" ? 5 : 7
             
             print("Renderización exitosa")
             return renderizadoPolyline
@@ -424,9 +443,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             let destino = segue.destination as! RegistroViewController
             destino.registro = registro
             destino.usuario = usuario
+            destino.nuevoRegistro = true
         }
-        
-        
     }
     
 }
@@ -442,9 +460,19 @@ extension MapaViewController: CLLocationManagerDelegate {
             if (listaCoordenadas.count > 1) {
                 let loc1 = CLLocation(latitude: listaCoordenadas[listaCoordenadas.count - 2].latitude, longitude: listaCoordenadas[listaCoordenadas.count - 2].longitude)
                 let loc2 = CLLocation(latitude: listaCoordenadas[listaCoordenadas.count - 1].latitude, longitude: listaCoordenadas[listaCoordenadas.count - 1].longitude)
-                distancia_total += loc1.distance(from: loc2)
+                let distancia = loc1.distance(from: loc2)
+                if distancia > 550 {
+                    print("Distancia demasiado grande entre 2 coordenadas")
+                    listaCoordenadas.removeLast()
+                    listaCoordenadasTotal.append(listaCoordenadas)
+                    listaCoordenadas = [CLLocationCoordinate2D]()
+               } else {
+                    distancia_total += distancia
+                    crearBordePolyline()
+                    crearPolyline()
+                }
             }
-            crearPolyline()
+            
         }
     }
     

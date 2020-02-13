@@ -31,6 +31,8 @@ class RegistroViewController: UIViewController {
     
     @IBOutlet weak var imagen_usuario: UIImageView!
     
+    var nuevoRegistro = false
+    var record = false
     var listaCoordenadas = [CLLocationCoordinate2D]() //<- guardar las coordenadas con X frecuencia
     var listaCoordenadasTotal = [[CLLocationCoordinate2D]]() //<- lista de las listas de coordenadas
     
@@ -42,7 +44,10 @@ class RegistroViewController: UIViewController {
     var amplitud_mapa: CGFloat = 10.0
     
     @IBAction func volverListaRegistros(_ sender: Any) {
-        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let pantalla_lista_registros = storyBoard.instantiateViewController(withIdentifier: "TabBarNuevoRecorridoRegistro") as! TabBarViewController
+        pantalla_lista_registros.selectedIndex = 1
+        navigationController?.pushViewController(pantalla_lista_registros, animated: true)
     }
     
     
@@ -68,7 +73,14 @@ class RegistroViewController: UIViewController {
         mapa.delegate = self
         
         let realm = try! Realm()
-        usuario = realm.objects(Usuario.self).first!
+        let registros = realm.objects(Registro.self)
+        let record_distancia: Double? = registros.max(ofProperty: "distancia") as Double?
+        
+        if registro!.distancia >= record_distancia! {
+            record = true
+        }
+        
+        usuario = registro!.usuario
         print(usuario!.nickname)
 
         nickname.text = usuario?.nickname
@@ -89,7 +101,7 @@ class RegistroViewController: UIViewController {
         
         //Imagen usuario
         if (usuario!.num_icono > 0 && usuario!.num_icono < 16) {
-        let imagenUsu = UIImage(named: "avatar-\(usuario!.num_icono)")
+            let imagenUsu = UIImage(named: "avatar-\(usuario!.num_icono)")
             imagen_usuario.image = imagenUsu
         }
         
@@ -104,6 +116,14 @@ class RegistroViewController: UIViewController {
             distancia.text = "Distancia: \(kilometros)km \(metros)m"
         } else {
             distancia.text = "Distancia: \(metros)m"
+        }
+        
+        if record {
+            if nuevoRegistro {
+                distancia.text! += " ¡Nuevo Record!"
+            } else {
+                distancia.text! += " ¡Record!"
+            }
         }
         
         //Calorias WIP
@@ -150,30 +170,165 @@ class RegistroViewController: UIViewController {
             }
         }
         
+        calcularRating()
         crearVariasPolyline()
         centrarVistaEnPolyLineInvisible()
         
     }
     
     func calcularRating() {
-
+        guard let fecha_nac = registro!.usuario!.fecha_nac else {
+            print("Error con la fecha nacimiento")
+            return
+        }
         let today = Date()
         let calendar = Calendar.current
-        let componentes = calendar.dateComponents([.year, .month, .day], from: registro!.usuario!.fecha_nac!, to: today)
+        let componentes = calendar.dateComponents([.year, .month, .day], from: fecha_nac, to: today)
         let dias = componentes.day! //print(type(of: dia)) //Int
         let meses = componentes.month!
         let anyos = componentes.year!
         print("Edad: \(anyos) años, \(meses) meses, \(dias) días") //24 años, 4 meses, 14 días
         
-        //Un sistema de rating muy casero basado en la edad, distancia recorrida y tiempo
+        //IMC: https://www.texasheart.org/heart-health/heart-information-center/topics/calculadora-del-indice-de-masa-corporal-imc/
+        let IMC = registro!.usuario!.peso / (registro!.usuario!.altura * 2 / 10)
+
+        //Un sistema de rating muy casero basado en la edad, distancia recorrida y tiempo aguantado
         var puntuacion = 0
         
-        if (registro!.distancia > 1000) {
-            if (anyos < 27) {
-                puntuacion += 1
+        var meta_distancia = 1000.0
+        //Meta distancia en base a edad y tipo actividad
+        if anyos < 24 {
+            if registro!.actividad == "Bici" {
+                meta_distancia = 15000
+            } else if registro!.actividad == "Correr" {
+                meta_distancia = 10000
+            } else {
+                meta_distancia = 4000
             }
-            
+        } else if anyos < 33 {
+            if registro!.actividad == "Bici" {
+                meta_distancia = 12000
+            } else if registro!.actividad == "Correr" {
+                meta_distancia = 8000
+            } else {
+                meta_distancia = 3000
+            }
+        } else if anyos < 50 {
+            if registro!.actividad == "Bici" {
+                meta_distancia = 12000
+            } else if registro!.actividad == "Correr" {
+                meta_distancia = 6000
+            } else {
+                meta_distancia = 2500
+            }
+        } else if anyos < 60 {
+            if registro!.actividad == "Bici" {
+                meta_distancia = 5000
+            } else if registro!.actividad == "Correr" {
+                meta_distancia = 3000
+            } else {
+                meta_distancia = 2000
+            }
+        } else {
+            if registro!.actividad == "Bici" {
+                meta_distancia = 4000
+            } else if registro!.actividad == "Correr" {
+                meta_distancia = 2000
+            } else {
+                meta_distancia = 2000
+            }
         }
+        
+        if IMC < 18 {
+            meta_distancia -= 500 //peso inferior al normal, menos esfuerzo
+        } else if IMC < 25 {
+            meta_distancia += 1000 //peso ideal, más esfuerzo
+        } else if IMC < 30 {
+            meta_distancia -= 500 //peso mayor al normal, menos esfuerzo
+        } else {
+            meta_distancia -= 1000 //obesidad, aún menos esfuerzo
+        }
+        
+        if (registro!.distancia > meta_distancia) {
+            puntuacion += 10
+        } else if registro!.distancia > (meta_distancia / 2) {
+            puntuacion += 7
+        } else if registro!.distancia > (meta_distancia / 3) {
+            puntuacion += 5
+        }
+        
+        var segundos = 0
+        if registro!.tiempo[0] > 0 {
+            segundos += registro!.tiempo[0] * 3600
+        }
+        if registro!.tiempo[1] > 0 {
+            segundos += registro!.tiempo[1] * 60
+        }
+        if registro!.tiempo[2] > 0 {
+            segundos += registro!.tiempo[2]
+        }
+        
+        var meta_tiempo = 3600
+        //Meta aguante (tiempo) en base a actividad
+        if registro!.actividad == "Bici" {
+            meta_tiempo = 3600
+        } else if registro!.actividad == "Correr" {
+            meta_tiempo = 2000
+        } else {
+            meta_tiempo = 4400
+        }
+        
+        if IMC < 18 {
+            meta_tiempo -= 60 //peso inferior al normal, menos esfuerzo
+        } else if IMC < 25 {
+            meta_tiempo += 120 //peso ideal, más esfuerzo
+        } else if IMC < 30 {
+            meta_tiempo -= 60 //peso mayor al normal, menos esfuerzo
+        } else {
+            meta_tiempo -= 120 //obesidad, aún menos esfuerzo
+        }
+        
+        if segundos > meta_tiempo {
+            puntuacion += 10
+        } else if segundos > (meta_tiempo / 2) {
+            puntuacion += 7
+        } else if segundos > (meta_tiempo / 3) {
+            puntuacion += 5
+        }
+        
+        if record {
+            puntuacion += 20
+        }
+        
+        if registro!.pausas == 0 {
+            puntuacion += 5
+        } else if registro!.pausas == 1 {
+            puntuacion += 3
+        } else if registro!.pausas == 2 {
+            puntuacion += 1
+        }
+        
+        //Puntos extra por el esfuerzo si el peso excede lo considerado 'peso ideal' (sobrepeso)
+        
+        var string_imagen_puntuacion = "rating-10"
+        if puntuacion < 5 {
+            string_imagen_puntuacion = "rating-10" //¡tienes que esforzarte más! half-star
+            rating.text = "¡Tienes que esforzarte más! ¡Ánimo!"
+        } else if puntuacion < 10 {
+            string_imagen_puntuacion = "rating-11" //aceptable tic
+            rating.text = "¡Bien! ¡Sigue mejorando!"
+        } else if puntuacion < 16 {
+            string_imagen_puntuacion = "rating-1" //¡bien hecho! star
+            rating.text = "¡Buen trabajo!"
+        } else if puntuacion < 21 {
+            string_imagen_puntuacion = "rating-5" //¡muy bien! 3 stars
+            rating.text = "¡Muy bien! Intenta superar tu record."
+        } else {
+            string_imagen_puntuacion = "rating-7" //¡genial! ¡estrella especial!
+            rating.text = "¡Impresionante! ¡Has recibido la estrella especial!"
+        }
+        let imagen_puntuacion = UIImage(named: string_imagen_puntuacion)
+        imagen_rating.image = imagen_puntuacion
         
     }
 
@@ -181,6 +336,7 @@ class RegistroViewController: UIViewController {
     func crearVariasPolyline() {
         for lista in listaCoordenadasTotal {
             listaCoordenadas = lista
+            crearBordePolyline() //ejecutamos primero el fondo para que haga de borde y no se superponga
             crearPolyline()
         }
     }
@@ -215,11 +371,42 @@ class RegistroViewController: UIViewController {
             print()
             
             let polyline = MKPolyline(coordinates: listaCoordenadas, count: listaCoordenadas.count)
-            
+            polyline.title = "main" //al ser main, la dibujará naranja y más fina
             mapa.addOverlay(polyline)
             
         } else {
             print("No hay suficientes coordenadas para crear la polyline")
+        }
+    }
+    
+    func crearBordePolyline() {
+        print("Empezando a crear Polyline")
+        
+        if listaCoordenadas.count >= 2 {
+            let puntoA = listaCoordenadas[listaCoordenadas.count - 2]
+            let puntoB = listaCoordenadas[listaCoordenadas.count - 1]
+            
+            print()
+            print("Últimas dos coordenadas para la polyline")
+            print("\(puntoA.latitude), \(puntoA.longitude)")
+            print("\(puntoB.latitude), \(puntoB.longitude)")
+            print()
+            
+            let polyline = MKPolyline(coordinates: listaCoordenadas, count: listaCoordenadas.count)
+            //polyline.title = "main" //<- al no ser main, la dibujará en negro y más gorda por lo que parecerá el borde
+            //info: https://stackoverflow.com/questions/58810993/how-to-add-border-to-mkpolyline
+            mapa.addOverlay(polyline)
+            
+        } else {
+            print("No hay suficientes coordenadas para crear la polyline")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Al final no utilizo este segue porque me desconfiguraba la previsualización, 'ejecuto el segue' desde el listener el botón
+        if (segue.identifier == "listaRegistrosSegue") {
+            let destino = segue.destination as! TabBarViewController
+            destino.selectedIndex = 1
         }
     }
 
@@ -234,8 +421,8 @@ extension RegistroViewController: MKMapViewDelegate {
             
             let renderizadoPolyline = MKPolylineRenderer(overlay: overlay)
             renderizadoPolyline.fillColor = UIColor.orange.withAlphaComponent(1)
-            renderizadoPolyline.strokeColor = UIColor.orange.withAlphaComponent(1)
-            renderizadoPolyline.lineWidth = 5
+            renderizadoPolyline.strokeColor = overlay.title == "main" ? UIColor.orange.withAlphaComponent(1) : .black
+            renderizadoPolyline.lineWidth = overlay.title == "main" ? 5 : 7
             
             print("Renderización exitosa")
             return renderizadoPolyline
