@@ -6,4 +6,27 @@
 //  Copyright © 2020 Daniel Tamargo Saiz. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CardParts
+
+class CardViewController: CardsViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let cards: [CardPartsViewController] = [
+            //CardPartTextController(),
+            //ThemedCardViewController(title: "¡Usuarios!"),
+            //CardPartTitleCardController(),
+            //SecondCardPartTitleCardController(),
+            CardPartPagedViewController(),
+            //CardPartTableViewController(),
+            //CardPartButtonController(),
+            //CardPartsReactiveController()
+        ]
+        
+        loadCards(cards: cards)
+        
+    }
+
+
+}

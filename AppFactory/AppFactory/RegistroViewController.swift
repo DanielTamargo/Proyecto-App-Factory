@@ -43,17 +43,39 @@ class RegistroViewController: UIViewController {
     
     var amplitud_mapa: CGFloat = 10.0
     
-    @IBAction func volverListaRegistros(_ sender: Any) {
+    func volverALaListaDeRegistros() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let pantalla_lista_registros = storyBoard.instantiateViewController(withIdentifier: "TabBarNuevoRecorridoRegistro") as! TabBarViewController
         pantalla_lista_registros.selectedIndex = 1
         navigationController?.pushViewController(pantalla_lista_registros, animated: true)
     }
     
+    @IBAction func volverListaRegistros(_ sender: Any) {
+        volverALaListaDeRegistros()
+    }
+    
     
     @IBAction func borrarRegistro(_ sender: Any) {
         //Borrar registro y volver a la lista de registros (W.I.P.)
-        
+        do {
+            let realm = try! Realm()
+            
+            try realm.write {
+                realm.delete(registro!)
+            }
+            
+            let alertController = UIAlertController(title: "Registro eliminado", message: "Volverás a la lista de registros.", preferredStyle: .alert)
+            let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
+                //let firstTextField = alertController.textFields![0] as UITextField
+                self.volverALaListaDeRegistros()
+            }
+            alertController.addAction(actionGuardar)
+            present(alertController, animated: true, completion: nil)
+            
+        } catch {
+            print("Error con el Realm")
+            //mostrar alerta de que no se ha podido eliminar por un error con la BBDD
+        }
         
     }
     
@@ -139,7 +161,7 @@ class RegistroViewController: UIViewController {
         //Fecha
         let df = DateFormatter()
         df.dateFormat = "dd MMMM yyyy"
-        let fechaStr = df.string(from: registro!.fecha!)
+        let fechaStr = df.string(from: registro!.fecha)
         fecha.text = fechaStr
         
         //Pausas

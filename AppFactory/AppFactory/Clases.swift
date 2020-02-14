@@ -41,7 +41,7 @@ class Registro: Object {
     @objc dynamic var id: Int = Int.random(in:10000 ... 100000000) //Por si falla al poner un id seguido, al menos que sea uno aleatorio
     @objc dynamic var distancia: Double = -1
     let tiempo = List<Int>() //Horas, Minutos, Segundos
-    @objc dynamic var fecha: Date?
+    @objc dynamic var fecha: Date = Date()
     @objc dynamic var actividad: String = ""
     @objc dynamic var usuario: Usuario? = Usuario()
     

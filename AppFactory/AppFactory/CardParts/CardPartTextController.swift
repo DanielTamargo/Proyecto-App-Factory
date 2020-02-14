@@ -6,4 +6,19 @@
 //  Copyright © 2020 Daniel Tamargo Saiz. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CardParts
+
+class CardPartTextController: CardPartsViewController {
+
+    let cardPartTextView = CardPartTextView(type: .normal)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        cardPartTextView.text = "これはCardPartsのサンプルです。"
+        
+        setupCardParts([cardPartTextView])
+    }
+
+}

@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zy6-2M-dnH">
-                                <rect key="frame" x="63" y="589" width="290" height="30"/>
+                                <rect key="frame" x="63" y="612" width="290" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Nuevo Usuario (mover este botón de aquí)"/>
                                 <connections>
@@ -53,6 +53,14 @@
                                 <state key="normal" title="Bici"/>
                                 <connections>
                                     <segue destination="U5A-0C-3tb" kind="show" identifier="nuevoRecorridoBici" id="b3O-Pb-puv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="221-dS-Qsy">
+                                <rect key="frame" x="142" y="574" width="132" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Ver cartas usuarios"/>
+                                <connections>
+                                    <segue destination="NHU-33-NSC" kind="show" id="9PB-Tc-E88"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -207,7 +215,7 @@
                                     <action selector="volverListaRegistros:" destination="BYC-tn-vcK" eventType="touchUpInside" id="ZL7-L3-nGz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3y2-bt-MMn">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3y2-bt-MMn">
                                 <rect key="frame" x="204" y="793" width="181" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Borrar registro (W.I.P.)"/>
@@ -612,6 +620,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pm9-NE-g4E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1370" y="138"/>
+        </scene>
+        <!--Ventana Usuarios Cards View Controller-->
+        <scene sceneID="hSE-i5-oEj">
+            <objects>
+                <viewController id="NHU-33-NSC" customClass="VentanaUsuariosCardsViewController" customModule="AppFactory" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WEd-vz-TEb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="YcZ-Yc-cxl"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="M0f-dI-Et5"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vAb-JW-Vne" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="977" y="910"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">

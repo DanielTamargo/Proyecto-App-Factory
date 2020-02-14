@@ -89,8 +89,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             
             registro.id = registros.count + 1
             
-            fecha_inicio = Date()
-            registro.fecha = fecha_inicio
+            let fecha_registro = Date()
+            registro.fecha = fecha_registro
             
             registro.distancia = distancia_total
             registro.actividad = tipoActividad
@@ -143,6 +143,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             print("Iniciando recorrido")
             self.mapView.delegate = self
             
+            caloriasLabel.text = "Calculando..."
+            
             temporizadorEstaON = true
             temporizadorON()
             
@@ -183,8 +185,8 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             // Sacamos horas, minutos y segundos
             let contadorTiempo = Int(floor(contador))
             let horas = contadorTiempo / 3600
-            let minutos = (contadorTiempo % 3600) / 60
-            let segundos = (contadorTiempo % 60) % 60
+            let minutos = (contadorTiempo % 3600) / 180
+            let segundos = (contadorTiempo % 60) % 180
             
             // Lo sacamos en texto para mostrar en labelTemporizador
             var horasString = "\(horas):"
@@ -235,26 +237,44 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     
         let peso = usuario.peso
         let contadorTiempo = Int(floor(contador))
-        let horas = Double(contadorTiempo / 3600)
-        //let minutos = (contadorTiempo % 3600) / 60
-        //let segundos = (contadorTiempo % 60) % 60
-        let velocidad = (distancia_total / 1000) / horas
-        var esfuerzo = 0.0175 //corriendo (caminando = 0.0600. bici = 0.0400)
+        //let horas = Double(contadorTiempo / 3600)
+        //let minutos = Double(contadorTiempo % 3600) / 60
+        let segundos = Double(contadorTiempo % 60) / 60
+        let velocidad = (distancia_total / 1000) / (segundos / 3600) //la distancia que está en metros la pasamos a km y la dividimos entre horas
+        //var esfuerzo = 0.000175 //corriendo (caminando = 0.0600. bici = 0.0400)
+        
+        var verdaderasCaloriasMinuto: Double = (2 * velocidad) / (9 * 60)
         if (tipoActividad == "Correr") {
-            esfuerzo = 0.0600
+            verdaderasCaloriasMinuto = (10 * velocidad) / (9 * 60)
         } else if (tipoActividad == "Bici") {
-            esfuerzo = 0.0400
+            verdaderasCaloriasMinuto = (8 * velocidad) / (9 * 60)
         }
         
-        var kCalorias_minuto: Double = 7.1
+        let calorias_minuto_Formated = String(format: "%.2f", verdaderasCaloriasMinuto)
         
-        kCalorias_minuto =  velocidad * esfuerzo * Double(peso)
-        
-        if (kCalorias_minuto < 1) {
-            caloriasLabel.text = "\(kCalorias_minuto * 1000)cal/min"
+        if calorias_minuto_Formated == "0.00" {
+            if caloriasLabel.text == "Calculando." {
+                caloriasLabel.text = "Calculando.."
+            } else if caloriasLabel.text == "Calculando.." {
+                caloriasLabel.text = "Calculando..."
+            } else {
+                caloriasLabel.text = "Calculando."
+            }
+            
         } else {
-            caloriasLabel.text = "\(kCalorias_minuto)Kcal/min"
+            caloriasLabel.text = "\(calorias_minuto_Formated)cal/min"
         }
+        
+        //var kCalorias_minuto: Double = 7.1
+        //kCalorias_minuto =  velocidad * esfuerzo * Double(peso)
+        
+        //let kCalorias_minuto_Formated = String(format: "%.2f", kCalorias_minuto)
+        //let calorias_minuto = kCalorias_minuto * 100
+        //let calorias_minuto_Formated = String(format: "%.f", calorias_minuto)
+        
+        //caloriasLabel.text = "\(kCalorias_minuto_Formated)Kcal/min"
+        //caloriasLabel.text = "\(calorias_minuto_Formated)cal/min"
+
         
     }
     

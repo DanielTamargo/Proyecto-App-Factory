@@ -8,23 +8,48 @@
 
 import UIKit
 
+import CardParts
+import RxCocoa
+
 class VentanaUsuariosCardsViewController: CardsViewController {
 
-    override func viewDidLoad() {
+        override func viewDidLoad() {
         super.viewDidLoad()
+        let cards: [CardPartsViewController] = [
+            //CardPartTextController(),
+            //ThemedCardViewController(title: "¡Usuarios!"),
+            //CardPartTitleCardController(),
+            //SecondCardPartTitleCardController(),
+            CardPartPagedViewController(),
+            //CardPartTableViewController(),
+            //CardPartButtonController(),
+            //CardPartsReactiveController()
+        ]
 
-        // Do any additional setup after loading the view.
+        loadCards(cards: cards)
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
+func shadowColor() -> CGColor {
+    return UIColor.lightGray.cgColor
+}
+
+func shadowRadius() -> CGFloat {
+    return 10.0
+}
+
+// The value can be from 0.0 to 1.0.
+// 0.0 => lighter shadow
+// 1.0 => darker shadow
+func shadowOpacity() -> Float {
+    return 1.0
+}
+
+func shadowOffset() -> CGSize {
+    return CGSize(width: 0, height: 5)
+}
+

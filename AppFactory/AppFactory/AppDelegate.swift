@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = Realm.Configuration(
             //Cada vez que haga falta una migración (cambios en la estructura de las clases a guardar), hay que aumentar en 1 el número de schemaVersion
             //La migración inicial por defecto es la 0
-            schemaVersion: 2,
+            schemaVersion: 3,
 
             // Set the block which will be called automatically when opening a Realm with
             // a schema version lower than the one set above

@@ -94,7 +94,7 @@ class TablaRegistrosTableViewController: UITableViewController {
         //df.dateStyle = .full
         //df.timeStyle = .full
         df.dateFormat = "dd MMM yyyy"
-        let fecha = df.string(from: registro.fecha!)
+        let fecha = df.string(from: registro.fecha)
         cell.fecha.text = fecha
         
         //Imagen usuario
