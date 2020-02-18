@@ -70,6 +70,9 @@ class TablaRegistrosTableViewController: UITableViewController {
         //Titulo
         cell.titulo.text = "Registro nº\(registro.id)"
         
+        //Actividad
+        cell.actividad.text = "Actividad: \(registro.actividad)"
+        
         //Distancia
         let distancia_total = registro.distancia
         var kilometros = 0

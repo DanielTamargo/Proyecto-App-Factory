@@ -12,6 +12,7 @@ import CardParts
 class CardPartTextController: CardPartsViewController {
 
     let cardPartTextView = CardPartTextView(type: .normal)
+    var usuario = Usuario()
     
     override func viewDidLoad() {
         super.viewDidLoad()

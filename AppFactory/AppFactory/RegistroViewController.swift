@@ -31,19 +31,85 @@ class RegistroViewController: UIViewController {
     
     @IBOutlet weak var imagen_usuario: UIImageView!
     
+    var borrado = false //si se borra el registro se pone como true
     var nuevoRegistro = false
     var record = false
     var listaCoordenadas = [CLLocationCoordinate2D]() //<- guardar las coordenadas con X frecuencia
     var listaCoordenadasTotal = [[CLLocationCoordinate2D]]() //<- lista de las listas de coordenadas
+    
+    var temporizador = Timer()
+    var temporizadorEstaON = false
+ 
+    var inicio = 0
+    var numListas = 0
+    var listaCoordenadasV = [CLLocationCoordinate2D]() //<- usada para la polyline progresiva
+    var lista = [CLLocationCoordinate2D]()
     
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var imagen_rating: UIImageView!
     
     @IBOutlet weak var mapa: MKMapView!
     
-    var amplitud_mapa: CGFloat = 10.0
+    var amplitud_mapa: CGFloat = 25.0
     
+    @IBAction func cambiarAmplitudMapa(_ sender: Any) {
+        if (selector_amplitud.selectedSegmentIndex == 0) {
+            amplitud_mapa = 25.0
+        } else {
+            amplitud_mapa = 300.0
+        }
+        centrarVistaEnPolyLineInvisible()
+    }
+    
+    func crearPolylineProgresivamente() {
+        if listaCoordenadasTotal.count > 0 {
+            listaCoordenadasV = listaCoordenadasTotal[0]
+            temporizadorON()
+        }
+    }
+    
+    func temporizadorON() {
+        temporizador = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(temporizadorCorriendo), userInfo: nil, repeats: true)
+    }
+    
+    @objc func temporizadorCorriendo() {
+        let punto = listaCoordenadasV[inicio]
+        
+        lista.append(punto)
+        //borrar esto para la lenta v1
+        crearPolylineProgresiva()
+        inicio += 1
+        if inicio >= listaCoordenadasV.count {
+            numListas += 1
+            inicio = 0
+            if numListas < listaCoordenadasTotal.count {
+                listaCoordenadasV = listaCoordenadasTotal[numListas]
+                lista = [CLLocationCoordinate2D]()
+            } else {
+                crearVariasPolyline()
+                listaCoordenadasV = listaCoordenadasTotal[0]
+                lista = [CLLocationCoordinate2D]()
+                numListas = 0
+            }
+        }
+    }
+    
+    func pararPolylineProgresiva() {
+        temporizador.invalidate()
+        crearVariasPolyline()
+    }
+    
+    func crearPolylineProgresiva() {
+        if lista.count >= 2 {
+            let polyline = MKPolyline(coordinates: lista, count: lista.count)
+            polyline.title = "test"
+            mapa.addOverlay(polyline)
+        }
+      }
+    
+
     func volverALaListaDeRegistros() {
+        pararPolylineProgresiva()
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let pantalla_lista_registros = storyBoard.instantiateViewController(withIdentifier: "TabBarNuevoRecorridoRegistro") as! TabBarViewController
         pantalla_lista_registros.selectedIndex = 1
@@ -56,38 +122,38 @@ class RegistroViewController: UIViewController {
     
     
     @IBAction func borrarRegistro(_ sender: Any) {
-        //Borrar registro y volver a la lista de registros (W.I.P.)
-        do {
-            let realm = try! Realm()
-            
-            try realm.write {
-                realm.delete(registro!)
+        if !borrado {
+            //Borrar registro y volver a la lista de registros (W.I.P.)
+            do {
+                let realm = try! Realm()
+                
+                try realm.write {
+                    realm.delete(registro!)
+                    borrado = true
+                }
+                pararPolylineProgresiva()
+                let alertController = UIAlertController(title: "Registro eliminado", message: "Volverás a la lista de registros.", preferredStyle: .alert)
+                let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
+                    //let firstTextField = alertController.textFields![0] as UITextField
+                    self.volverALaListaDeRegistros()
+                }
+                alertController.addAction(actionGuardar)
+                present(alertController, animated: true, completion: nil)
+                
+            } catch {
+                print("Error con el Realm")
+                //mostrar alerta de que no se ha podido eliminar por un error con la BBDD
             }
-            
-            let alertController = UIAlertController(title: "Registro eliminado", message: "Volverás a la lista de registros.", preferredStyle: .alert)
+        } else {
+            let alertController = UIAlertController(title: "Registro ya eliminado", message: "El registro ya fue eliminado. Descuida.", preferredStyle: .alert)
             let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
                 //let firstTextField = alertController.textFields![0] as UITextField
                 self.volverALaListaDeRegistros()
             }
             alertController.addAction(actionGuardar)
             present(alertController, animated: true, completion: nil)
-            
-        } catch {
-            print("Error con el Realm")
-            //mostrar alerta de que no se ha podido eliminar por un error con la BBDD
         }
-        
     }
-    
-    @IBAction func cambiarAmplitudMapa(_ sender: Any) {
-        if (selector_amplitud.selectedSegmentIndex == 0) {
-            amplitud_mapa = 10.0
-        } else {
-            amplitud_mapa = 100.0
-        }
-        centrarVistaEnPolyLineInvisible()
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -194,7 +260,10 @@ class RegistroViewController: UIViewController {
         
         calcularRating()
         crearVariasPolyline()
+        
         centrarVistaEnPolyLineInvisible()
+        
+        crearPolylineProgresivamente()
         
     }
     
@@ -443,8 +512,13 @@ extension RegistroViewController: MKMapViewDelegate {
             
             let renderizadoPolyline = MKPolylineRenderer(overlay: overlay)
             renderizadoPolyline.fillColor = UIColor.orange.withAlphaComponent(1)
-            renderizadoPolyline.strokeColor = overlay.title == "main" ? UIColor.orange.withAlphaComponent(1) : .black
-            renderizadoPolyline.lineWidth = overlay.title == "main" ? 5 : 7
+            if overlay.title == "test" {
+                renderizadoPolyline.strokeColor = UIColor.purple
+                renderizadoPolyline.lineWidth = 5
+            } else {
+                renderizadoPolyline.strokeColor = overlay.title == "main" ? UIColor.orange.withAlphaComponent(1) : .black
+                renderizadoPolyline.lineWidth = overlay.title == "main" ? 5 : 7
+            }
             
             print("Renderización exitosa")
             return renderizadoPolyline

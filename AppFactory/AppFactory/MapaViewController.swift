@@ -87,7 +87,11 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             
             let registros = realm.objects(Registro.self)
             
-            registro.id = registros.count + 1
+            if registros.count > 0 {
+                registro.id = registros.last!.id + 1
+            } else {
+                registro.id = 1
+            }
             
             let fecha_registro = Date()
             registro.fecha = fecha_registro
@@ -155,6 +159,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
                 print("Pausando recorrido")
                 
                 temporizadorEstaON = false
+                // no hago temporizador.invalidate() por https://stackoverflow.com/questions/32282415/timer-fire-not-working-after-invalidating-in-swift
                 
                 iniciar.setTitle("Reanudar", for: .normal)
             } else {
@@ -185,7 +190,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             // Sacamos horas, minutos y segundos
             let contadorTiempo = Int(floor(contador))
             let horas = contadorTiempo / 3600
-            let minutos = (contadorTiempo % 3600) / 180
+            let minutos = (contadorTiempo % 3600) / 60
             let segundos = (contadorTiempo % 60) % 180
             
             // Lo sacamos en texto para mostrar en labelTemporizador
@@ -209,8 +214,10 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             let decimasSegundo = String(format: "%.1f", contador).components(separatedBy: ".").last!
             
             // No quiero que salgan las horas hasta que llegue a una hora
-            if horas == 0 {
-                horasString = ""
+            if horas > 0 {
+                labelTemporizador.text = "\(horasString):\(minutosString):\(segundosString).\(decimasSegundo)"
+            } else {
+                labelTemporizador.text = "\(minutosString):\(segundosString).\(decimasSegundo)"
             }
             
             // Configuramos el texto del label
@@ -223,7 +230,17 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             if kilometros > 0 {
                 distanciaLabel.text = "\(kilometros)km \(metros)m"
             } else {
-                distanciaLabel.text = "\(metros)m"
+                if metros < 10 {
+                    if distanciaLabel.text == "Calculando." {
+                        distanciaLabel.text = "Calculando.."
+                    } else if distanciaLabel.text == "Calculando.." {
+                        distanciaLabel.text = "Calculando..."
+                    } else {
+                        distanciaLabel.text = "Calculando."
+                    }
+                } else {
+                    distanciaLabel.text = "\(metros)m"
+                }
             }
             
             caloriasQuemadas()
