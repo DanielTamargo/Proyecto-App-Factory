@@ -44,6 +44,7 @@ class Registro: Object {
     @objc dynamic var fecha: Date = Date()
     @objc dynamic var actividad: String = ""
     @objc dynamic var usuario: Usuario? = Usuario()
+    @objc dynamic var calorias: Double = 0.0
     
     //guardo coordenadas para recrear el recorrido en el mapa si decido mostrar la imagen.
     //Ojo! no se guardan los puntos que haya saltado al pausar y reanudar

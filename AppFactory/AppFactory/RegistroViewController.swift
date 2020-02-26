@@ -57,7 +57,7 @@ class RegistroViewController: UIViewController {
     
     @IBOutlet weak var mapa: MKMapView!
     
-    var amplitud_mapa: CGFloat = 25.0
+    var amplitud_mapa: CGFloat = 25.0 //no entiendo por que en ipohone 8 necesito poner 85 para que sea similar
     
     
     @IBAction func cambiarAmplitudMapa(_ sender: Any) {
@@ -204,12 +204,6 @@ class RegistroViewController: UIViewController {
         imagen_rating.layer.shadowRadius = 2.0
         imagen_rating.layer.shadowOpacity = 0.9
         
-        //Faltan
-        //- Fórmula para calcular las calorías
-        //- Cálculo para saber qué rating mostrar
-        
-        //let imagenRating = UIImage(named: "rating-\(num_icono_rating)")
-        //imagen_rating = imagenRating
         
         //Imagen usuario
         if (usuario!.num_icono > 0 && usuario!.num_icono < 16) {
@@ -238,8 +232,12 @@ class RegistroViewController: UIViewController {
             }
         }
         
-        //Calorias WIP
-        calorias.text = "Calorías: "
+        //Calorias
+        if registro?.calorias != nil && registro!.calorias > 0.5 {
+            calorias.text = "Calorías: \(registro!.calorias)"
+        } else {
+            calorias.text = "Calorías: 0"
+        }
         
         //Tiempo
         if registro!.tiempo.count > 2 {
@@ -250,6 +248,7 @@ class RegistroViewController: UIViewController {
         
         //Fecha
         let df = DateFormatter()
+        df.locale = Locale(identifier: "es_ES")
         df.dateFormat = "dd MMMM yyyy"
         let fechaStr = df.string(from: registro!.fecha)
         fecha.text = fechaStr

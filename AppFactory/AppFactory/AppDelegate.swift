@@ -12,8 +12,6 @@ import RealmSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -21,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = Realm.Configuration(
             //Cada vez que haga falta una migración (cambios en la estructura de las clases a guardar), hay que aumentar en 1 el número de schemaVersion
             //La migración inicial por defecto es la 0
-            schemaVersion: 3,
+            schemaVersion: 4,
 
             // Set the block which will be called automatically when opening a Realm with
             // a schema version lower than the one set above
@@ -43,6 +41,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         do {
             let realm = try Realm()
+            
+            //OJO, IMPLEMENTAR ESTA PARTE DEL CÓDIGO DONDE DEMOS LA OPCIÓN DE ELIMINAR CUALQUIER USUARIO
+            print("Depuración de registros cuyo usuario haya sido eliminado...")
+            let registros = realm.objects(Registro.self)
+            for registro in registros {
+                if registro.usuario == nil {
+                    try realm.write {
+                        realm.delete(registro)
+                        print("Registro borrado")
+                    }
+                }
+            }
+            /*
+            let borrarUltimoUsuario = realm.objects(Usuario.self).last!
+            try realm.write {
+                realm.delete(borrarUltimoUsuario)
+                print("Usuario borrado")
+            }
+            */
             //print(Realm.Configuration.defaultConfiguration.fileURL)
         } catch {
             print("Error al ejecutar Realm en AppDelegate, \(error)")

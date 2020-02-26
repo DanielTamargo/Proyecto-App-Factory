@@ -19,10 +19,22 @@ class TablaRegistrosTableViewController: UITableViewController {
     //En próximos avances intentaré implementar una forma de filtrar
     //"Solo mis registros / Todos los registros" " <5km / >5km"
     func cargarRegistros() {
+        
+        print("Depuración de registros cuyo usuario haya sido eliminado...")
+        let registrosADepurar = realm.objects(Registro.self)
+        for registroDepurando in registrosADepurar {
+            if registro.usuario == nil {
+                try! realm.write {
+                    realm.delete(registroDepurando)
+                    print("Registro borrado")
+                }
+            }
+        }
         //registros = realm.objects(Registro.self).filter(byKeyPath:descending:)
         registros = realm.objects(Registro.self).sorted(byKeyPath: "id", ascending: false)
         
     }
+    
     
     func moverANuevoRecorrido() {
         self.tabBarController?.selectedIndex = 0
@@ -104,6 +116,7 @@ class TablaRegistrosTableViewController: UITableViewController {
         let df = DateFormatter()
         //df.dateStyle = .full
         //df.timeStyle = .full
+        df.locale = Locale(identifier: "es_ES")
         df.dateFormat = "dd MMM yyyy"
         let fecha = df.string(from: registro.fecha)
         cell.fecha.text = fecha

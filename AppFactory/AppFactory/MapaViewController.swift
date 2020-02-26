@@ -110,6 +110,9 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             registro.tiempo.append(t_minutos)
             registro.tiempo.append(t_segundos)
             
+            registro.calorias = calorias_gastadas
+            
+            
             for lista in listaCoordenadasTotal {
                 for coordenada in lista {
                     let lat: String = String(Double(coordenada.latitude))
@@ -274,7 +277,6 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
         }
         
         if verdaderasCaloriasMinuto < 180 {
-        
             let calorias_minuto_Formated = String(format: "%.2f", verdaderasCaloriasMinuto)
             
             if calorias_minuto_Formated == "0.00" || listaCoordenadas.count < 2 {
@@ -287,6 +289,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
                 }
                 
             } else {
+                calorias_gastadas = verdaderasCaloriasMinuto * segundos / 60
                 caloriasLabel.text = "\(calorias_minuto_Formated)cal/min"
             }
         }

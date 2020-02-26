@@ -32,6 +32,15 @@ class NuevoUsuarioViewController: UIViewController {
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
+        let realm = try! Realm()
+        if realm.objects(Usuario.self).count > 0 {
+            let alertController = UIAlertController(title: "¡Cuidado!", message: "Si creas un nuevo usuario a partir de entonces este será el usuario predeterminado. Sé que quieres crear y elegir entre distintos usuarios, lo sé, pero es que las CardParts son duras de roer... ¿Quizás en próximas versiones? Si lo que quieres es continuar con el usuario que has usado hasta ahora, ¡corre y dale a cancelar para volver atrás!", preferredStyle: .alert)
+            let actionGuardar = UIAlertAction(title: "¡Oído cocina!", style: .cancel) { (_) in
+            }
+            alertController.addAction(actionGuardar)
+            present(alertController, animated: true, completion: nil)
+        }
+        
         guardar.titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5);
         cancelar.titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5);
         
@@ -139,7 +148,7 @@ class NuevoUsuarioViewController: UIViewController {
                 try! realm.write {
                     realm.add(usuario)
                     print("Usuario añadido")
-                    let alertController = UIAlertController(title: "¡Usuario guardado!", message: "Ya puedes iniciar sesión con tu nuevo usuario (si es que la interfaz está implementada...).", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "¡Usuario guardado!", message: "A partir de ahora este será el usuario predeterminado.", preferredStyle: .alert)
                     let actionGuardar = UIAlertAction(title: "¡Bien!", style: .cancel) { (_) in
                         //let firstTextField = alertController.textFields![0] as UITextField
                         self.volverANuevoRecorrido()
@@ -169,14 +178,25 @@ class NuevoUsuarioViewController: UIViewController {
     @IBAction func cancelar(_ sender: Any) {
         
         //let alertController = UIAlertController(title: "Cancelando...", message: "Si quieres crear un usuario, puedes hacerlo en cualquier momento", preferredStyle: .alert)
-        let alertController = UIAlertController(title: "Cancelando...", message: "En verdad, no puedes cancelar la creación del usuario, es indispensable, esta opción estará disponible en el futuro, ¡perdón por las molestias colega!", preferredStyle: .alert)
-        let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
-            //let firstTextField = alertController.textFields![0] as UITextField
-            //self.volverANuevoRecorrido()
-        }
-        alertController.addAction(actionGuardar)
-        present(alertController, animated: true, completion: nil)
+        let realm = try! Realm()
         
+        if realm.objects(Usuario.self).count <= 0 {
+            let alertController = UIAlertController(title: "¡Necesitas tener un usuario!", message: "¡Ey! ¡Necesitas registrar por lo menos un usuario para que la aplicación funcione!, ¡perdón por las molestias colega!", preferredStyle: .alert)
+            let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
+                //self.volverANuevoRecorrido()
+            }
+            alertController.addAction(actionGuardar)
+            present(alertController, animated: true, completion: nil)
+            
+        } /*else {
+            let alertController = UIAlertController(title: "Cancelando...", message: "¡Phew! Por los pelos", preferredStyle: .alert)
+            let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
+                self.volverANuevoRecorrido()
+            }
+            alertController.addAction(actionGuardar)
+            present(alertController, animated: true, completion: nil)
+        }
+             */
         //dismiss(animated: true, completion: nil)
         //super.dismiss(animated: true, completion: nil)
         //self.dismiss(animated: true, completion: nil)
