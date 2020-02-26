@@ -22,6 +22,7 @@
 		81CFF18523F735870099E545 /* CardPartImageViewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CFF18423F735870099E545 /* CardPartImageViewCardController.swift */; };
 		81D0426523E9C8D5006339B4 /* BBDDTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D0426423E9C8D5006339B4 /* BBDDTestingViewController.swift */; };
 		81D0426723E9D3B5006339B4 /* NuevoUsuarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D0426623E9D3B5006339B4 /* NuevoUsuarioViewController.swift */; };
+		81D6688A23FEE5AB00F05C91 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D6688923FEE5AB00F05C91 /* Variables.swift */; };
 		81D68F6D23E36095000A4956 /* Clases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D68F6C23E36095000A4956 /* Clases.swift */; };
 		81DAE7CF23F1B10C00DCC4D0 /* NuevoRecorridoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAE7CE23F1B10C00DCC4D0 /* NuevoRecorridoViewController.swift */; };
 		81FE87B523F5DB1300466499 /* VentanaUsuariosCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE87B423F5DB1300466499 /* VentanaUsuariosCardsViewController.swift */; };
@@ -57,6 +58,7 @@
 		81CFF18423F735870099E545 /* CardPartImageViewCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPartImageViewCardController.swift; sourceTree = "<group>"; };
 		81D0426423E9C8D5006339B4 /* BBDDTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBDDTestingViewController.swift; sourceTree = "<group>"; };
 		81D0426623E9D3B5006339B4 /* NuevoUsuarioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuevoUsuarioViewController.swift; sourceTree = "<group>"; };
+		81D6688923FEE5AB00F05C91 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		81D68F6C23E36095000A4956 /* Clases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clases.swift; sourceTree = "<group>"; };
 		81DAE7CE23F1B10C00DCC4D0 /* NuevoRecorridoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuevoRecorridoViewController.swift; sourceTree = "<group>"; };
 		81FE87B423F5DB1300466499 /* VentanaUsuariosCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentanaUsuariosCardsViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				81FE87C123F5E63A00466499 /* CardPartReactiveController.swift */,
 				81FE87C323F5E66800466499 /* ThemedCardViewController.swift */,
 				81CFF18423F735870099E545 /* CardPartImageViewCardController.swift */,
+				81D6688923FEE5AB00F05C91 /* Variables.swift */,
 			);
 			path = CardParts;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				81668A7E23D2388E0096DBAB /* ViewController.swift in Sources */,
 				81A55CBB23DA00E300C25568 /* MapaViewController.swift in Sources */,
 				81FE87C223F5E63A00466499 /* CardPartReactiveController.swift in Sources */,
+				81D6688A23FEE5AB00F05C91 /* Variables.swift in Sources */,
 				81C55E8323ECA97500936E51 /* TestViewController.swift in Sources */,
 				811A3D4C23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift in Sources */,
 				81A708DA23EDDEE800610841 /* TabBarViewController.swift in Sources */,

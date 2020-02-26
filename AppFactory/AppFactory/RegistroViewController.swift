@@ -39,7 +39,14 @@ class RegistroViewController: UIViewController {
     
     var temporizador = Timer()
     var temporizadorEstaON = false
- 
+
+
+    var red = 255
+    var green = 169
+    var greenInverso = false
+    var blue = 118
+    var alpha = 1.0
+    
     var inicio = 0
     var numListas = 0
     var listaCoordenadasV = [CLLocationCoordinate2D]() //<- usada para la polyline progresiva
@@ -51,6 +58,7 @@ class RegistroViewController: UIViewController {
     @IBOutlet weak var mapa: MKMapView!
     
     var amplitud_mapa: CGFloat = 25.0
+    
     
     @IBAction func cambiarAmplitudMapa(_ sender: Any) {
         if (selector_amplitud.selectedSegmentIndex == 0) {
@@ -74,7 +82,7 @@ class RegistroViewController: UIViewController {
     
     @objc func temporizadorCorriendo() {
         let punto = listaCoordenadasV[inicio]
-        
+        gradientePolyline()
         lista.append(punto)
         //borrar esto para la lenta v1
         crearPolylineProgresiva()
@@ -92,6 +100,22 @@ class RegistroViewController: UIViewController {
                 numListas = 0
             }
         }
+    }
+    
+    func gradientePolyline() { //Utilizar colores que van cambiando progresivamente???
+        
+        if !greenInverso {
+            green += 1
+            if green > 218 {
+                greenInverso = true
+            }
+        } else {
+            green -= 1
+            if green < 169 {
+                greenInverso = false
+            }
+        }
+        
     }
     
     func pararPolylineProgresiva() {
@@ -114,12 +138,12 @@ class RegistroViewController: UIViewController {
         let pantalla_lista_registros = storyBoard.instantiateViewController(withIdentifier: "TabBarNuevoRecorridoRegistro") as! TabBarViewController
         pantalla_lista_registros.selectedIndex = 1
         navigationController?.pushViewController(pantalla_lista_registros, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     @IBAction func volverListaRegistros(_ sender: Any) {
         volverALaListaDeRegistros()
     }
-    
     
     @IBAction func borrarRegistro(_ sender: Any) {
         if !borrado {
@@ -157,7 +181,7 @@ class RegistroViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         mapa.delegate = self
         
         let realm = try! Realm()
@@ -492,14 +516,6 @@ class RegistroViewController: UIViewController {
             print("No hay suficientes coordenadas para crear la polyline")
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Al final no utilizo este segue porque me desconfiguraba la previsualización, 'ejecuto el segue' desde el listener el botón
-        if (segue.identifier == "listaRegistrosSegue") {
-            let destino = segue.destination as! TabBarViewController
-            destino.selectedIndex = 1
-        }
-    }
 
 }
 
@@ -513,7 +529,7 @@ extension RegistroViewController: MKMapViewDelegate {
             let renderizadoPolyline = MKPolylineRenderer(overlay: overlay)
             renderizadoPolyline.fillColor = UIColor.orange.withAlphaComponent(1)
             if overlay.title == "test" {
-                renderizadoPolyline.strokeColor = UIColor.purple
+                renderizadoPolyline.strokeColor = UIColor.purple.withAlphaComponent(1)
                 renderizadoPolyline.lineWidth = 5
             } else {
                 renderizadoPolyline.strokeColor = overlay.title == "main" ? UIColor.orange.withAlphaComponent(1) : .black

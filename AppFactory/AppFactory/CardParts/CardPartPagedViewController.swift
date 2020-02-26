@@ -17,10 +17,11 @@ class CardPartPagedViewController: CardPartsViewController {
     private var currentPage = 0
     private var imageName = ""
     private var timer: Timer?
+    static var currentButtonID = 0
     
     let cardPartTextView = CardPartTextView(type: .normal)
     let nombreUsuario = CardPartTextView(type: .header)
-    let emojis: [String] = ["😎", "🤪", "🤩", "👻", "🤟🏽", "💋", "💃🏽"]
+    let emojis: [String] = ["😎", "🤪", "🤩"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +41,13 @@ class CardPartPagedViewController: CardPartsViewController {
             let sv = CardPartStackView()
             sv.axis = .vertical
             sv.spacing = 8
+            sv.tag = index
             stackViews.append(sv)
-            sv.tag = currentPage
             
-            let title = CardPartTextView(type: .normal)
-            title.text = "\(usuario.nickname)"
-            title.textAlignment = .center
-            sv.addArrangedSubview(title)
+            let articleTitleView = CardPartTextView(type: .title)
+            articleTitleView.text = "\(usuario.nickname)"
+            articleTitleView.textAlignment = .center
+            sv.addArrangedSubview(articleTitleView)
 
             imageName = "avatar-\(usuario.num_icono)"
             if usuario.num_icono == 0 {
@@ -60,8 +61,10 @@ class CardPartPagedViewController: CardPartsViewController {
             emoji.text = emojis[Int.random(in: 0 ..< emojis.count)]
             emoji.textAlignment = .center
             sv.addArrangedSubview(emoji)
+            
+            //let button = CardPartButtonController()
+            //sv.addArrangedSubview(button)
 
-            currentPage += 1 //usamos esto para distintos colores de fondo?
         }
         
         let cardPartPagedView = CardPartPagedView(withPages: stackViews, andHeight: 400)
@@ -76,21 +79,17 @@ class CardPartPagedViewController: CardPartsViewController {
         }
 
         // The default state for setupCardParts([]) is .none
-        self.cardTapped {
+        self.cardTapped {[weak self] in
             print("Card was tapped in .none state")
             print(cardPartPagedView.pagina)
-           
-            
-        }
-        /*
-        // To animate through the pages
-        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: {[weak self] (_) in
-            
             guard let this = self else { return }
-            this.currentPage = this.currentPage == this.emojis.count - 1 ? 0 : this.currentPage + 1
-            cardPartPagedView.moveToPage(this.currentPage)
-        })
-        */
+            //this.currentPage = this.currentPage .....
+            print(this.currentPage)
+            print(cardPartPagedView.tag)
+            //print(cardPartPagedView.currentPage) //<- error
+            print(this.cardPartTextView.tag)
+        }
+        
         
         setupCardParts([cardPartTextView, cardPartPagedView])
     }

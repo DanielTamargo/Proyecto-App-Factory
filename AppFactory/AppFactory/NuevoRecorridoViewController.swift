@@ -21,23 +21,29 @@ class NuevoRecorridoViewController: UIViewController {
         
         //TODO: Sustituir cargar usuario predeterminado por usuario loggeado
         let realm = try! Realm()
-        let usuario = realm.objects(Usuario.self).first!
-        print(usuario.nickname)
         
-        
-        if (segue.identifier == "nuevoRecorridoCaminar") {
-            let destino = segue.destination as! MapaViewController
-            destino.usuario = usuario
-            destino.tipoActividad = "Caminar"
-        } else if (segue.identifier == "nuevoRecorridoCorrer") {
-            let destino = segue.destination as! MapaViewController
-            destino.usuario = usuario
-            destino.tipoActividad = "Correr"
-        } else if (segue.identifier == "nuevoRecorridoBici") {
-            let destino = segue.destination as! MapaViewController
-            destino.usuario = usuario
-            destino.tipoActividad = "Bici"
+        let usuarios = realm.objects(Usuario.self)
+        if usuarios.count > 0 {
+            let usuario = realm.objects(Usuario.self).last!
+            print(usuario.nickname)
+            
+            if (segue.identifier == "nuevoRecorridoCaminar") {
+                let destino = segue.destination as! MapaViewController
+                destino.usuario = usuario
+                destino.tipoActividad = "Caminar"
+            } else if (segue.identifier == "nuevoRecorridoCorrer") {
+                let destino = segue.destination as! MapaViewController
+                destino.usuario = usuario
+                destino.tipoActividad = "Correr"
+            } else if (segue.identifier == "nuevoRecorridoBici") {
+                let destino = segue.destination as! MapaViewController
+                destino.usuario = usuario
+                destino.tipoActividad = "Bici"
+            }
+        } else {
+            
         }
+
     }
 
     /*

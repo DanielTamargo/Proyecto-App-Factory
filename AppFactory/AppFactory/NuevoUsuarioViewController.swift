@@ -30,6 +30,8 @@ class NuevoUsuarioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
         guardar.titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5);
         cancelar.titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5);
         
@@ -102,7 +104,11 @@ class NuevoUsuarioViewController: UIViewController {
         let peso_string = peso.text
         
         if (altura.text == "" || peso.text == "" || nickname.text == "") {
-            print("Faltan datos :)")
+            let alertController = UIAlertController(title: "¡Faltan datos!", message: "¡Eh colega! Necesitamos que rellenes todos los datos para que la aplicación funcione correctamente :(", preferredStyle: .alert)
+            let actionGuardar = UIAlertAction(title: "Vale", style: .cancel) { (_) in
+            }
+            alertController.addAction(actionGuardar)
+            present(alertController, animated: true, completion: nil)
         } else {
         
             let altura_usuario = Int(altura_string!)
@@ -142,7 +148,11 @@ class NuevoUsuarioViewController: UIViewController {
                     present(alertController, animated: true, completion: nil)
                 }
             } else {
-                print("El nickname '\(nickname_usuario!)' ya existe")
+                let alertController = UIAlertController(title: "Usuario ya existente", message: "Ese nombre de usuario tan molón ya está cogido :(, ¡pero seguro que encuentras otro mejor aún!", preferredStyle: .alert)
+                let actionGuardar = UIAlertAction(title: "Vale", style: .cancel) { (_) in
+                }
+                alertController.addAction(actionGuardar)
+                present(alertController, animated: true, completion: nil)
             }
             
             /*
@@ -158,10 +168,11 @@ class NuevoUsuarioViewController: UIViewController {
     
     @IBAction func cancelar(_ sender: Any) {
         
-        let alertController = UIAlertController(title: "Cancelando...", message: "Si quieres crear un usuario, puedes hacerlo en cualquier momento", preferredStyle: .alert)
+        //let alertController = UIAlertController(title: "Cancelando...", message: "Si quieres crear un usuario, puedes hacerlo en cualquier momento", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Cancelando...", message: "En verdad, no puedes cancelar la creación del usuario, es indispensable, esta opción estará disponible en el futuro, ¡perdón por las molestias colega!", preferredStyle: .alert)
         let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
             //let firstTextField = alertController.textFields![0] as UITextField
-            self.volverANuevoRecorrido()
+            //self.volverANuevoRecorrido()
         }
         alertController.addAction(actionGuardar)
         present(alertController, animated: true, completion: nil)
@@ -173,6 +184,7 @@ class NuevoUsuarioViewController: UIViewController {
     }
     
     func volverANuevoRecorrido() {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         super.navigationController?.popViewController(animated: true)
         /*let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "NuevoRecorrido")// as NextViewController

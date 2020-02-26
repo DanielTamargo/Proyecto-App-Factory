@@ -13,6 +13,7 @@ class CardPartButtonController: CardPartsViewController {
     
     let cardPartTextView = CardPartTextView(type: .normal)
     let cardPartButtonView = CardPartButtonView()
+    var id: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +24,18 @@ class CardPartButtonController: CardPartsViewController {
         cardPartButtonView.setTitleColor(UIColor.magenta, for: .normal)
         cardPartButtonView.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
+        cardPartButtonView.tag = MyVariables.currentButtonID
+        id = MyVariables.currentButtonID
+        MyVariables.currentButtonID += 1
+        
+        
         setupCardParts([cardPartTextView, cardPartButtonView])
     }
     
     @objc func buttonTapped() {
-        
+        if id != nil {
+            print(id!)
+        }
         let alertController = UIAlertController(title: "Botón apretado!", message: "Has apretado el botón", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

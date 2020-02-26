@@ -13,6 +13,7 @@ class TablaRegistrosTableViewController: UITableViewController {
     
     let realm = try! Realm()
     var registros : Results<Registro>?
+    var registro = Registro()
     
     //Cargamos todos los registros. La idea es que es una app para uso personal/familiar, así que se visualizarán todos los registros (mostraremos la imagen de cada usuario)
     //En próximos avances intentaré implementar una forma de filtrar
@@ -23,16 +24,23 @@ class TablaRegistrosTableViewController: UITableViewController {
         
     }
     
+    func moverANuevoRecorrido() {
+        self.tabBarController?.selectedIndex = 0
+    }
     // Cargar aquí en una lista la lista de registros del usuario loggeado
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cargarRegistros()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        guard let regis = registros else { return }
+        if regis.count <= 0 {
+            let alertController = UIAlertController(title: "Aún no tienes registros", message: "¿No tienes registros aún? ¡Inicia un nuevo recorrido!", preferredStyle: .alert)
+            let actionGuardar = UIAlertAction(title: "¡Vamos allá!", style: .cancel) { (_) in
+                self.moverANuevoRecorrido()
+            }
+            alertController.addAction(actionGuardar)
+            present(alertController, animated: true, completion: nil)
+        }
     }
 
     // MARK: - Table view data source
@@ -111,13 +119,23 @@ class TablaRegistrosTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let registro = registros?[indexPath.row] else { return }
+        self.registro = registro
+        self.performSegue(withIdentifier: "registroDesdeTabla", sender: indexPath.row)
         
+        /*
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let pantallaRegistro = storyBoard.instantiateViewController(withIdentifier: "VistaRegistro") as! RegistroViewController
         pantallaRegistro.registro = registro
         navigationController?.pushViewController(pantallaRegistro, animated: true)
+        */
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "registroDesdeTabla") {
+            let destino = segue.destination as! RegistroViewController
+            destino.registro = registro
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

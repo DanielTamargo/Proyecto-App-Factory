@@ -214,14 +214,12 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             let decimasSegundo = String(format: "%.1f", contador).components(separatedBy: ".").last!
             
             // No quiero que salgan las horas hasta que llegue a una hora
-            if horas > 0 {
+            if horas >= 1 {
                 labelTemporizador.text = "\(horasString):\(minutosString):\(segundosString).\(decimasSegundo)"
             } else {
                 labelTemporizador.text = "\(minutosString):\(segundosString).\(decimasSegundo)"
             }
             
-            // Configuramos el texto del label
-            labelTemporizador.text = "\(horasString)\(minutosString):\(segundosString).\(decimasSegundo)"
             
             var kilometros = 0
             kilometros = Int(distancia_total) / 1000
@@ -267,19 +265,30 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
             verdaderasCaloriasMinuto = (8 * velocidad) / (9 * 60)
         }
         
-        let calorias_minuto_Formated = String(format: "%.2f", verdaderasCaloriasMinuto)
-        
-        if calorias_minuto_Formated == "0.00" {
-            if caloriasLabel.text == "Calculando." {
-                caloriasLabel.text = "Calculando.."
-            } else if caloriasLabel.text == "Calculando.." {
-                caloriasLabel.text = "Calculando..."
-            } else {
-                caloriasLabel.text = "Calculando."
-            }
-            
+        if (tipoActividad == "Correr") {
+            verdaderasCaloriasMinuto = verdaderasCaloriasMinuto / 3
+        } else if (tipoActividad == "Bici") {
+            verdaderasCaloriasMinuto = verdaderasCaloriasMinuto / 5
         } else {
-            caloriasLabel.text = "\(calorias_minuto_Formated)cal/min"
+            verdaderasCaloriasMinuto = verdaderasCaloriasMinuto / 15
+        }
+        
+        if verdaderasCaloriasMinuto < 180 {
+        
+            let calorias_minuto_Formated = String(format: "%.2f", verdaderasCaloriasMinuto)
+            
+            if calorias_minuto_Formated == "0.00" || listaCoordenadas.count < 2 {
+                if caloriasLabel.text == "Calculando." {
+                    caloriasLabel.text = "Calculando.."
+                } else if caloriasLabel.text == "Calculando.." {
+                    caloriasLabel.text = "Calculando..."
+                } else {
+                    caloriasLabel.text = "Calculando."
+                }
+                
+            } else {
+                caloriasLabel.text = "\(calorias_minuto_Formated)cal/min"
+            }
         }
         
         //var kCalorias_minuto: Double = 7.1
@@ -498,7 +507,7 @@ extension MapaViewController: CLLocationManagerDelegate {
                 let loc1 = CLLocation(latitude: listaCoordenadas[listaCoordenadas.count - 2].latitude, longitude: listaCoordenadas[listaCoordenadas.count - 2].longitude)
                 let loc2 = CLLocation(latitude: listaCoordenadas[listaCoordenadas.count - 1].latitude, longitude: listaCoordenadas[listaCoordenadas.count - 1].longitude)
                 let distancia = loc1.distance(from: loc2)
-                if distancia > 550 {
+                if distancia > 250 {
                     print("Distancia demasiado grande entre 2 coordenadas")
                     listaCoordenadas.removeLast()
                     listaCoordenadasTotal.append(listaCoordenadas)
