@@ -30,7 +30,7 @@ class NuevoUsuarioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         let realm = try! Realm()
         if realm.objects(Usuario.self).count > 0 {

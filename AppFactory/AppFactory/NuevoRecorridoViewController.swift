@@ -13,13 +13,12 @@ class NuevoRecorridoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        //TODO: Sustituir cargar usuario predeterminado por usuario loggeado
+        //TODO: Sustituir cargar usuario predeterminado por usuario loggeado cuando las cardparts no me destrocen las ganas de vivir
         let realm = try! Realm()
         
         let usuarios = realm.objects(Usuario.self)
@@ -41,19 +40,9 @@ class NuevoRecorridoViewController: UIViewController {
                 destino.tipoActividad = "Bici"
             }
         } else {
-            
+            print("Segue desconocido (?)")
         }
 
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

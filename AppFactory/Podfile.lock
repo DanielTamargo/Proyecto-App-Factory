@@ -21,11 +21,13 @@ PODS:
     - RxCocoa (~> 4.5)
     - RxSwift (~> 4.5)
   - RxSwift (4.5.0)
+  - SwiftyGif (5.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.3)
   - CardParts
   - RealmSwift
+  - SwiftyGif
 
 SPEC REPOS:
   trunk:
@@ -38,6 +40,7 @@ SPEC REPOS:
     - RxDataSources
     - RxGesture
     - RxSwift
+    - SwiftyGif
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
@@ -49,7 +52,8 @@ SPEC CHECKSUMS:
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxGesture: c1b7bf17166b0ef9d642a9510f8bac5785f18990
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
 
-PODFILE CHECKSUM: 6850a9f8df869ec93699cf1c95963b37187450b8
+PODFILE CHECKSUM: 8556aafb86a8879b7c69a3f773e8353fe4d98e86
 
 COCOAPODS: 1.8.4

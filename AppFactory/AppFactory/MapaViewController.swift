@@ -311,6 +311,7 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //cargarUsuario()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         comprobarServicioLocalizacion()
     }
     

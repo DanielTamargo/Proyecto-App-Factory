@@ -232,13 +232,6 @@ class RegistroViewController: UIViewController {
             }
         }
         
-        //Calorias
-        if registro?.calorias != nil && registro!.calorias > 0.5 {
-            calorias.text = "Calorías: \(registro!.calorias)"
-        } else {
-            calorias.text = "Calorías: 0"
-        }
-        
         //Tiempo
         if registro!.tiempo.count > 2 {
             tiempo.text = "Tiempo: \(registro!.tiempo[0])h \(registro!.tiempo[1])m \(registro!.tiempo[2])s"
@@ -287,6 +280,18 @@ class RegistroViewController: UIViewController {
         centrarVistaEnPolyLineInvisible()
         
         crearPolylineProgresivamente()
+        selector_amplitud.selectedSegmentIndex = 1
+        selector_amplitud.selectedSegmentIndex = 0
+        //Calorias
+        guard let calorias_registro = registro?.calorias else {
+            calorias.text = "Calorías: 0"
+            return
+        }
+        if calorias_registro != nil && registro!.calorias > 0.5 {
+            calorias.text = "Calorías: \(registro!.calorias)"
+        } else {
+            calorias.text = "Calorías: 0"
+        }
         
     }
     

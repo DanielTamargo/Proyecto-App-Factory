@@ -25,6 +25,9 @@
 		81D6688A23FEE5AB00F05C91 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D6688923FEE5AB00F05C91 /* Variables.swift */; };
 		81D68F6D23E36095000A4956 /* Clases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D68F6C23E36095000A4956 /* Clases.swift */; };
 		81DAE7CF23F1B10C00DCC4D0 /* NuevoRecorridoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAE7CE23F1B10C00DCC4D0 /* NuevoRecorridoViewController.swift */; };
+		81DFE6B424082195004FAF38 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DFE6B324082195004FAF38 /* UIView+Constraints.swift */; };
+		81DFE6B6240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif in Resources */ = {isa = PBXBuildFile; fileRef = 81DFE6B5240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif */; };
+		81DFE6B8240821D1004FAF38 /* LogoAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DFE6B7240821D1004FAF38 /* LogoAnimationView.swift */; };
 		81FE87B523F5DB1300466499 /* VentanaUsuariosCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE87B423F5DB1300466499 /* VentanaUsuariosCardsViewController.swift */; };
 		81FE87B823F5E4E500466499 /* CardPartButtonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE87B723F5E4E500466499 /* CardPartButtonController.swift */; };
 		81FE87BA23F5E54A00466499 /* CardPartPagedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE87B923F5E54A00466499 /* CardPartPagedViewController.swift */; };
@@ -61,6 +64,9 @@
 		81D6688923FEE5AB00F05C91 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		81D68F6C23E36095000A4956 /* Clases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clases.swift; sourceTree = "<group>"; };
 		81DAE7CE23F1B10C00DCC4D0 /* NuevoRecorridoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuevoRecorridoViewController.swift; sourceTree = "<group>"; };
+		81DFE6B324082195004FAF38 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		81DFE6B5240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Intro-Running-Alfada-GIF-Close.gif"; path = "../../Items y apuntes/Gifs/IntroGifs/Intro-Running-Alfada-GIF-Close.gif"; sourceTree = "<group>"; };
+		81DFE6B7240821D1004FAF38 /* LogoAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoAnimationView.swift; sourceTree = "<group>"; };
 		81FE87B423F5DB1300466499 /* VentanaUsuariosCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentanaUsuariosCardsViewController.swift; sourceTree = "<group>"; };
 		81FE87B723F5E4E500466499 /* CardPartButtonController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPartButtonController.swift; sourceTree = "<group>"; };
 		81FE87B923F5E54A00466499 /* CardPartPagedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPartPagedViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +132,9 @@
 				81A708D923EDDEE800610841 /* TabBarViewController.swift */,
 				81FE87B423F5DB1300466499 /* VentanaUsuariosCardsViewController.swift */,
 				81FE87C523F5E6B600466499 /* VentanaUsuarioTestCardsViewController.swift */,
+				81DFE6B324082195004FAF38 /* UIView+Constraints.swift */,
+				81DFE6B7240821D1004FAF38 /* LogoAnimationView.swift */,
+				81DFE6B5240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif */,
 			);
 			path = AppFactory;
 			sourceTree = "<group>";
@@ -230,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81DFE6B6240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif in Resources */,
 				81668A8623D238900096DBAB /* LaunchScreen.storyboard in Resources */,
 				81668A8323D238900096DBAB /* Assets.xcassets in Resources */,
 				81668A8123D2388E0096DBAB /* Main.storyboard in Resources */,
@@ -292,8 +302,10 @@
 				81C55E8323ECA97500936E51 /* TestViewController.swift in Sources */,
 				811A3D4C23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift in Sources */,
 				81A708DA23EDDEE800610841 /* TabBarViewController.swift in Sources */,
+				81DFE6B424082195004FAF38 /* UIView+Constraints.swift in Sources */,
 				81FE87B523F5DB1300466499 /* VentanaUsuariosCardsViewController.swift in Sources */,
 				81C55E8123ECA70B00936E51 /* RegistroViewController.swift in Sources */,
+				81DFE6B8240821D1004FAF38 /* LogoAnimationView.swift in Sources */,
 				81FE87BA23F5E54A00466499 /* CardPartPagedViewController.swift in Sources */,
 				81D0426523E9C8D5006339B4 /* BBDDTestingViewController.swift in Sources */,
 				81FE87C023F5E61E00466499 /* CardPartTitleCardController.swift in Sources */,

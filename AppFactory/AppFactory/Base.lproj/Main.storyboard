@@ -767,27 +767,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cun-47-xiZ">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cun-47-xiZ">
                                 <rect key="frame" x="20" y="113" width="374" height="81.5"/>
                                 <string key="text">Esto es un login que muestra una animación mientras carga y cuando ambos procesos están finalizados finaliza. Será la primera pantalla a mostrar</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Lc-hP-7VY">
-                                <rect key="frame" x="26" y="257" width="363" height="256"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Lc-hP-7VY">
+                                <rect key="frame" x="31" y="640" width="363" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Que me vooy" image="002-nuevo-recorrido"/>
                                 <connections>
-                                    <segue destination="c15-qE-ziN" kind="show" id="9tr-xN-f4L"/>
+                                    <segue destination="c15-qE-ziN" kind="show" identifier="launchScreenOff" id="9tr-xN-f4L"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagen-estatica" translatesAutoresizingMaskIntoConstraints="NO" id="9c0-PT-4AY">
+                                <rect key="frame" x="-106.5" y="281" width="627" height="334"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="334" id="Uie-eq-aHz"/>
+                                    <constraint firstAttribute="width" constant="627" id="cFA-3M-yvv"/>
+                                    <constraint firstAttribute="width" secondItem="9c0-PT-4AY" secondAttribute="height" multiplier="627:334" id="eDz-pX-am7"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="cun-47-xiZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="7eR-By-d31"/>
+                            <constraint firstItem="9c0-PT-4AY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="CGR-Rf-mx8"/>
                             <constraint firstItem="cun-47-xiZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" id="amp-rs-TMm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cun-47-xiZ" secondAttribute="trailing" constant="20" id="bdc-Gf-fEj"/>
+                            <constraint firstItem="9c0-PT-4AY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jrr-S0-PwE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -795,7 +805,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="525" y="138"/>
+            <point key="canvasLocation" x="524.63768115942037" y="137.94642857142856"/>
         </scene>
         <!--AppFactory-->
         <scene sceneID="C4H-cD-jhV">
@@ -822,6 +832,7 @@
         <image name="arrow.left" catalog="system" width="64" height="48"/>
         <image name="arrow.right" catalog="system" width="64" height="48"/>
         <image name="avatar-1" width="512" height="512"/>
+        <image name="imagen-estatica" width="1920" height="1080"/>
         <image name="rating-1" width="512" height="512"/>
         <image name="tipoactividad-bici" width="512" height="512"/>
         <image name="tipoactividad-caminar" width="512" height="511"/>

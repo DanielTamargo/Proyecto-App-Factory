@@ -1,0 +1,62 @@
+https://medium.com/@hukicamer/animated-launch-screen-using-a-gif-in-ios-cd759ae9130d
+
+1. Añadir la primera imagen del gif como imagen estática en la pantalla de inicio
+
+2. Cuando la app se lanza, se añade una view que carga el gif animado en el mismo sitio que la imagen estática
+	Añadimos una UIImageView con el logo (constraints centro ancho y alto)
+
+
+
+3. Creamos la clase del logo (hay que sustituir las constraints con las que le pongamos a la imagen del logo estática)
+
+class IntroAnimadaView: UIView {
+	let logoGif = UIImageView(gifImage: UIImage(gifName: "intro-gif-far"), loopCount: 1)
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		commonInit()
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		commonInit()
+	}
+	
+	private func commonInit() {
+		//backgroundColor = UIColor(white: 246.0, alpha: 1)
+		addSubview(logoGif)
+		logoGif.translatesAutoresizingMaskIntoConstraints = false
+        	logoGif.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        	logoGif.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        	logoGif.widthAnchor.constraint(equalToConstant: 280).isActive = true
+        	logoGif.heightAnchor.constraint(equalToConstant: 108).isActive = true
+	}
+}
+
+
+4. Llamamos al gif en el viewDidLoad del ViewController en cuestión
+
+class ViewController: UIViewController {
+
+	let introAnimada = IntroAnimadaView()
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.addSubview(introAnimada)
+		introAnimada.pinEdgesToSuperView()
+		introAnimada.logoGif.delegate = self
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		introAnimada.logoGif.startAnimatingGif()
+	}
+
+}
+
+extension ViewController: SwiftyGifDelegate {
+	func gifDidStop(sender: UIImageView) {
+		introAnimada.isHidden = true
+		//enviar a la nueva ventana
+	}
+}

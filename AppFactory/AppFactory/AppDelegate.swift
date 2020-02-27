@@ -65,7 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Error al ejecutar Realm en AppDelegate, \(error)")
         }
         
-        
         return true
     }
 
