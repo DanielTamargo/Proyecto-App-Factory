@@ -188,15 +188,15 @@ class NuevoUsuarioViewController: UIViewController {
             alertController.addAction(actionGuardar)
             present(alertController, animated: true, completion: nil)
             
-        } /*else {
-            let alertController = UIAlertController(title: "Cancelando...", message: "¡Phew! Por los pelos", preferredStyle: .alert)
+        } else {
+            let alertController = UIAlertController(title: "Cancelando...", message: "Usuario no guardado.", preferredStyle: .alert)
             let actionGuardar = UIAlertAction(title: "Okay", style: .cancel) { (_) in
                 self.volverANuevoRecorrido()
             }
             alertController.addAction(actionGuardar)
             present(alertController, animated: true, completion: nil)
         }
-             */
+        
         //dismiss(animated: true, completion: nil)
         //super.dismiss(animated: true, completion: nil)
         //self.dismiss(animated: true, completion: nil)

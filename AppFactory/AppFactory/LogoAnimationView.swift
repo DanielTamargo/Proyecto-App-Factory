@@ -11,8 +11,11 @@ import SwiftyGif
 
 class LogoAnimationView: UIView {
     
+    //cambiar la ruta aquí y en gifImage (no sé por qué no deja mandar la ruta como variable, te obliga a ponerla manualmente)
+    let ruta = "Intro-Running-Alfada-GIF-Far.gif"
+    
     let logoGifImageView: UIImageView = {
-        guard let gifImage = try? UIImage(gifName: "Intro-Running-Alfada-GIF-Close.gif") else {
+        guard let gifImage = try? UIImage(gifName: "Intro-Running-Alfada-GIF-Far.gif") else {
             return UIImageView()
         }
         return UIImageView(gifImage: gifImage, loopCount: 1)
@@ -35,7 +38,12 @@ class LogoAnimationView: UIView {
         logoGifImageView.translatesAutoresizingMaskIntoConstraints = false
         logoGifImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         logoGifImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        logoGifImageView.widthAnchor.constraint(equalToConstant: 528).isActive = true
-        logoGifImageView.heightAnchor.constraint(equalToConstant: 281).isActive = true
+        if ruta == "Intro-Running-Alfada-GIF-Close.gif" {
+            logoGifImageView.widthAnchor.constraint(equalToConstant: 528).isActive = true
+            logoGifImageView.heightAnchor.constraint(equalToConstant: 281).isActive = true
+        } else {
+            logoGifImageView.widthAnchor.constraint(equalToConstant: 902).isActive = true
+            logoGifImageView.heightAnchor.constraint(equalToConstant: 480).isActive = true
+        }
     }
 }

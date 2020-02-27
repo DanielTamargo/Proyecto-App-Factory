@@ -28,6 +28,7 @@
 		81DFE6B424082195004FAF38 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DFE6B324082195004FAF38 /* UIView+Constraints.swift */; };
 		81DFE6B6240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif in Resources */ = {isa = PBXBuildFile; fileRef = 81DFE6B5240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif */; };
 		81DFE6B8240821D1004FAF38 /* LogoAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DFE6B7240821D1004FAF38 /* LogoAnimationView.swift */; };
+		81E7D43A240859DC00355020 /* Intro-Running-Alfada-GIF-Far.gif in Resources */ = {isa = PBXBuildFile; fileRef = 81E7D439240859DC00355020 /* Intro-Running-Alfada-GIF-Far.gif */; };
 		81FE87B523F5DB1300466499 /* VentanaUsuariosCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE87B423F5DB1300466499 /* VentanaUsuariosCardsViewController.swift */; };
 		81FE87B823F5E4E500466499 /* CardPartButtonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE87B723F5E4E500466499 /* CardPartButtonController.swift */; };
 		81FE87BA23F5E54A00466499 /* CardPartPagedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE87B923F5E54A00466499 /* CardPartPagedViewController.swift */; };
@@ -67,6 +68,7 @@
 		81DFE6B324082195004FAF38 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		81DFE6B5240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Intro-Running-Alfada-GIF-Close.gif"; path = "../../Items y apuntes/Gifs/IntroGifs/Intro-Running-Alfada-GIF-Close.gif"; sourceTree = "<group>"; };
 		81DFE6B7240821D1004FAF38 /* LogoAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoAnimationView.swift; sourceTree = "<group>"; };
+		81E7D439240859DC00355020 /* Intro-Running-Alfada-GIF-Far.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Intro-Running-Alfada-GIF-Far.gif"; path = "../../Items y apuntes/Gifs/IntroGifs/Intro-Running-Alfada-GIF-Far.gif"; sourceTree = "<group>"; };
 		81FE87B423F5DB1300466499 /* VentanaUsuariosCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentanaUsuariosCardsViewController.swift; sourceTree = "<group>"; };
 		81FE87B723F5E4E500466499 /* CardPartButtonController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPartButtonController.swift; sourceTree = "<group>"; };
 		81FE87B923F5E54A00466499 /* CardPartPagedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPartPagedViewController.swift; sourceTree = "<group>"; };
@@ -126,7 +128,6 @@
 				811A3D4923E4B0B6006A33B3 /* TablaRegistrosTableViewController.swift */,
 				811A3D4B23E4B17D006A33B3 /* CeldaRegistroTableViewCell.swift */,
 				81C55E8023ECA70B00936E51 /* RegistroViewController.swift */,
-				81D0426423E9C8D5006339B4 /* BBDDTestingViewController.swift */,
 				81D0426623E9D3B5006339B4 /* NuevoUsuarioViewController.swift */,
 				81C55E8223ECA97500936E51 /* TestViewController.swift */,
 				81A708D923EDDEE800610841 /* TabBarViewController.swift */,
@@ -134,7 +135,9 @@
 				81FE87C523F5E6B600466499 /* VentanaUsuarioTestCardsViewController.swift */,
 				81DFE6B324082195004FAF38 /* UIView+Constraints.swift */,
 				81DFE6B7240821D1004FAF38 /* LogoAnimationView.swift */,
+				81D0426423E9C8D5006339B4 /* BBDDTestingViewController.swift */,
 				81DFE6B5240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif */,
+				81E7D439240859DC00355020 /* Intro-Running-Alfada-GIF-Far.gif */,
 			);
 			path = AppFactory;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				81DFE6B6240821B1004FAF38 /* Intro-Running-Alfada-GIF-Close.gif in Resources */,
 				81668A8623D238900096DBAB /* LaunchScreen.storyboard in Resources */,
 				81668A8323D238900096DBAB /* Assets.xcassets in Resources */,
+				81E7D43A240859DC00355020 /* Intro-Running-Alfada-GIF-Far.gif in Resources */,
 				81668A8123D2388E0096DBAB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

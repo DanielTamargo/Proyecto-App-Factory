@@ -427,7 +427,10 @@ class RegistroViewController: UIViewController {
             puntuacion += 1
         }
         
-        //Puntos extra por el esfuerzo si el peso excede lo considerado 'peso ideal' (sobrepeso)
+        //Puntos extra por el esfuerzo si el peso excede lo considerado 'peso ideal' (sobrepeso, infrapeso)
+        if IMC > 40 || IMC < 15 {
+            puntuacion += 5
+        }
         
         var string_imagen_puntuacion = "rating-10"
         if puntuacion < 5 {

@@ -293,18 +293,6 @@ class MapaViewController: UIViewController, MKMapViewDelegate {
                 caloriasLabel.text = "\(calorias_minuto_Formated)cal/min"
             }
         }
-        
-        //var kCalorias_minuto: Double = 7.1
-        //kCalorias_minuto =  velocidad * esfuerzo * Double(peso)
-        
-        //let kCalorias_minuto_Formated = String(format: "%.2f", kCalorias_minuto)
-        //let calorias_minuto = kCalorias_minuto * 100
-        //let calorias_minuto_Formated = String(format: "%.f", calorias_minuto)
-        
-        //caloriasLabel.text = "\(kCalorias_minuto_Formated)Kcal/min"
-        //caloriasLabel.text = "\(calorias_minuto_Formated)cal/min"
-
-        
     }
     
     // Se ejecuta al cargar la ventana
