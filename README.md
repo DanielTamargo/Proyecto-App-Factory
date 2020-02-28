@@ -16,13 +16,13 @@
 
 |                |**Sí hace**                                        |**No hace**                         |
 |----------------|---------------------------------------------------|------------------------------------|
-|Recorridos      |Permite iniciar un nuevo recorrido.                |No permite modificarlo.             |
+|**Recorridos**      |Permite iniciar un nuevo recorrido.                |No permite modificarlo.             |
 |                |Guarda un registro de cada recorrido.              |                                    |
 |                |Permite eliminar un registro.                      |                                    |
 |                |Se puede acceder a un listado de los registros y visualizar cada uno de estos.|         |
 |                |Cada registro está vinculado a un usuario.         |                                    |
 |                |Se crea un mapa, se traza una línea con el recorrido sobre dicho mapa, se guardan todas las coordenadas utilizadas en la BBDD, se guardan los siguientes datos: distancia total, calorías estimadas, número de pausas, fecha y tiempo.         |                   |
-|Usuarios        |Permite crear un nuevo usuario.                    |No permite modificarlo.             |
+|**Usuarios**        |Permite crear un nuevo usuario.                    |No permite modificarlo.             |
 |                |El usuario guarda información tal como: nickname, sexo, altura, peso, fecha nacimiento y avatar.|No permite seleccionar entre los usuarios creados (problemas con las CardParts).|
 |                |                                                   |No permite eliminar un usuario.     |
 
