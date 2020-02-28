@@ -53,8 +53,14 @@ En mi opinión, me ha resultado muy productivo y personalmente lo he disfrutado 
 
 ## Enlaces utilizados para consultar (W.I.P)
 
+W.I.P
+W.I.P
+W.I.P
 
+## Manual (vídeo)
 
-#### Intro gif
+W.I.P
+
+## Intro gif
 
 ![Intro](/Items%20y%20apuntes/Gifs/IntroGifs/Intro-Running-Alfada-GIF-Far.gif)
