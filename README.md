@@ -2,6 +2,10 @@
 
 *"Crea una aplicación que permita seleccionar una actividad (caminar, correr, andar en bici...), grabe los recorridos mostrándolos en un mapa y registre el histórico de todas las actividades"*
 
+## Planteamiento (estructura de las ventanas y cómo se enlazan)
+
+![Estructura](/Items y apuntes/Pantallazos/Captura de pantalla 2020-02-27 a las 20.34.14.png "Planteamiento")
+
 ## Pods Utilizados
 
 * [RealmSwift (Base de Datos)](https://github.com/realm/realm-cocoa)
