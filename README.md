@@ -59,7 +59,9 @@ W.I.P
 
 ## Manual (vídeo)
 
-W.I.P
+[Fuente](https://youtu.be/ktOvlhbMIQU)
+
+[![Manual](/Items%20y%20apuntes/Pantallazos/PantallazoManual.png)](https://youtu.be/ktOvlhbMIQU)
 
 ## Intro gif
 
