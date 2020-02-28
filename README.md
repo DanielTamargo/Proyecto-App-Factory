@@ -55,10 +55,6 @@ En mi opinión, me ha resultado muy productivo y personalmente lo he disfrutado 
 
 - [Varios vídeos del canal de Ion Jaureguialzo Sarasola](https://www.youtube.com/channel/UCaFf9p4OcV4w9IFjhHdL3tw)
 - [Timer](https://medium.com/ios-os-x-development/build-an-stopwatch-with-swift-3-0-c7040818a10f)
-- Realm
-  * [Tutorial Realm](https://realm.io/docs/tutorials/realmtasks/)
-  * [Tutorial Realm en Vídeo](https://www.youtube.com/watch?v=PmsJW59rNY8)
-  * [Entidad con máximo ID](https://stackoverflow.com/questions/32804266/how-to-get-item-with-max-id)
 - MapKit
   * [Mostrar mapa, utilizar CoreLocation y mostrar localización usuario](https://www.youtube.com/watch?v=WPpaAy73nJc)
   * [Mostrar mapa basado en dos coordenadas](https://stackoverflow.com/questions/36996987/how-to-show-a-map-within-two-coordinates)
@@ -67,10 +63,14 @@ En mi opinión, me ha resultado muy productivo y personalmente lo he disfrutado 
 - Polyline
   * [Documentación Apple](https://developer.apple.com/documentation/mapkitjs/route/3039035-polyline)
   * [Documentación Apple 2](https://developer.apple.com/documentation/mapkit/mkpolyline)
-  * [Borde Polyline]
+  * [Borde Polyline](https://stackoverflow.com/questions/58810993/how-to-add-border-to-mkpolyline)
   * [Pintar Polyline 1](https://medium.com/devzy/ios-draw-polyline-via-mapkit-in-swift-9cdac6ceeecf)
   * [Pintar Polyline 2](https://www.youtube.com/watch?v=vEN5WzsAoxA)
   * [Añadir color gradiente a la Polyline (sin éxito, quizás obsoleto)](https://github.com/joeltrew/GradientPathRenderer)
+- Realm
+  * [Tutorial Realm](https://realm.io/docs/tutorials/realmtasks/)
+  * [Tutorial Realm en Vídeo](https://www.youtube.com/watch?v=PmsJW59rNY8)
+  * [Entidad con máximo ID](https://stackoverflow.com/questions/32804266/how-to-get-item-with-max-id)
 - Fechas
   * [DateComponents](https://nshipster.com/datecomponents/)
   * [DateFormatter en otro lenguaje](https://stackoverflow.com/questions/46877573/using-dateformatter-in-another-language)
@@ -79,7 +79,7 @@ En mi opinión, me ha resultado muy productivo y personalmente lo he disfrutado 
 - [Cambiar el índice seleccionado del TabBar mediante código](https://stackoverflow.com/questions/25325923/programmatically-switching-between-tabs-within-swift)
 - [Calculadora IMC](https://www.texasheart.org/heart-health/heart-information-center/topics/calculadora-del-indice-de-masa-corporal-imc/)
 - CardParts ...
-  * [Toda su info](https://github.com/intuit/CardParts/blob/master/Example/CardParts/CardPartPagedViewCardController.swift)
+  * [Ejemplo CardPartPagedViewCardController](https://github.com/intuit/CardParts/blob/master/Example/CardParts/CardPartPagedViewCardController.swift)
   * [Tutorial 1](https://www.youtube.com/watch?v=L-f1KSPKm4I)
   * [Tutorial 2 (japonés)](https://www.youtube.com/watch?v=0KGZ6H9unP8)
 - [Ajustar el aspecto y centro de una UIImageView](https://stackoverflow.com/questions/15499376/uiimageview-aspect-fit-and-center)
