@@ -4,7 +4,7 @@
 
 ## Planteamiento (estructura de las ventanas y cómo se enlazan)
 
-![Estructura](/Items y apuntes/Pantallazos/Captura de pantalla 2020-02-27 a las 20.34.14.png "Planteamiento")
+![Estructura](/Items%20y%20apuntes/Pantallazos/Captura de pantalla 2020-02-27 a las 20.34.14.png)
 
 ## Pods Utilizados
 
